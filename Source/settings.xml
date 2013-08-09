@@ -1,0 +1,30 @@
+
+<root>
+
+  <Camera>
+    <dirX type="float">0</dirX>
+    <dirY type="float">0</dirY>
+    <dirZ type="float">1</dirZ>
+    <fovY type="float">45</fovY>
+    <posX type="float">0</posX>
+    <posY type="float">0</posY>
+    <posZ type="float">0</posZ>
+    <upX type="float">0</upX>
+    <upY type="float">1</upY>
+    <upZ type="float">0</upZ>
+    <velocityRotate type="float">0.5</velocityRotate>
+    <velocityTranslate type="float">0.200000003</velocityTranslate>
+  </Camera>
+
+  <Raytracing>
+    <reflectionDepth type="int">5</reflectionDepth>
+  </Raytracing>
+
+  <Window>
+    <height type="int">768</height>
+    <maxFPS type="int">6000</maxFPS>
+    <width type="int">1024</width>
+    <windowed type="bool">1</windowed>
+  </Window>
+
+</root>

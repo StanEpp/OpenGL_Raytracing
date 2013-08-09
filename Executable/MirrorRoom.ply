@@ -1,0 +1,67 @@
+ply
+format ascii 1.0
+element vertex 8
+property float x
+property float y
+property float z
+element material 2
+property list uchar float diffuse
+property list uchar float specular
+property list uchar float emission   
+property float shininess
+element face 8
+property list uchar int vertex_indices
+property int material_index
+element sphere 1
+property list uchar float xyz
+property float r
+property int material_index
+element plane 2
+property list uchar float xyz
+property list uchar float nxyz
+property int material_index
+element pointLight 6
+property list uchar float xyz
+property list uchar float color
+property list uchar float attenuation
+element directionalLight 0
+property list uchar float xyz
+property list uchar float color
+property list uchar float attenuation
+end_header
+
+15 0 25
+-15 0 25
+-15 50 25
+15 50 25
+15 0 -25
+-15 0 -25
+-15 50 -25
+15 50 -25
+
+3 0.1 0.5 0.1 	3 0 0.7 0.7 	3 0 0 0 	100
+3 0 0.5 0.25 	3 1 0 0 		3 0 0 0 	100
+
+3 0 1 2 	1
+3 2 3 0		1
+3 6 5 4		1
+3 6 4 7		1
+3 1 5 6		1
+3 6 2 1     1
+3 7 4 0     1
+3 7 0 3		1
+
+3 0 25 0 	3 		0
+
+
+3 0 0 0		3 0 1 0		-1
+3 0 50 0	3 0 -1 0 	-1
+
+3 0 5  0		3 0.5 0 0.5		3 0 0 0.5
+3 0 45 0		3 0 0.5 0.5		3 0 0 0.5
+3 14 25 0		3 1 1 1			3 0 0 3
+3 -14 25 0		3 1 1 1			3 0 0 3
+3 0 25 24		3 1 1 1			3 0 0 3
+3 0 25 -24		3 1 1 1			3 0 0 3
+3 0 1 0			3 1 1 1			3 0 0 3
+3 0 49 0		3 1 1 1			3 0 0 3
