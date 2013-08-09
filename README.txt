@@ -17,4 +17,10 @@ of the executable in your command prompt: "Raytracing.exe CubeRoom.ply"
 It is possible to load more then one scene at once by placing further names at the end:
 "Raytracing.exe CubeRoom.ply MirrorRoom.ply"
 
+[KEYS]
+Mouse = Rotating the camera
+Right mouse button = Stops rotating the camera
++/- = Increasing/Decreasing the reflection depth
+W, A, S, D = Moving the camera
+
 Thank you for downloading this humble project! :)
