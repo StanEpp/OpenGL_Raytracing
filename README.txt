@@ -1,6 +1,9 @@
 This application is my first raytracer which uses OpenGL and its compute shader.
 The whole naive raytracing algorithm is written in GLSL and can be found in the file "cs.glsl". 
 
+[INFORMATION]
+I used the boost library and the Rply library for loading the .ply files.
+
 [SCENE DESCRIPTION]
 It is possible to create your own scenes using primitves like spheres, polygons and planes. 
 For lightning you can use point lights and directional lights. 
