@@ -31,10 +31,11 @@ void ShaderManager::loadShader(const char* filepath, std::string shaderKey, GLen
 		GLsizei* length = new GLsizei;
 		glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, length); //Get the length of the compilation log
 		char* compilationLog = new char[*length];			 //Create the needed char array
-
 		glGetShaderInfoLog(shaderID, *length, NULL, compilationLog); //Get the compilation log
-
-		throw std::exception(("ERROR: \nCompilation log of shader "+shaderKey+":\n"+std::string(compilationLog)).c_str());
+		std::string compilationLogString(compilationLog); //Create string for the compilation log
+		delete[] compilationLog; //Delete the compilation log array
+		
+		throw std::exception(("ERROR: \nCompilation log of shader "+shaderKey+":\n"+compilationLogString).c_str());
 	}
 	
 	
@@ -131,13 +132,14 @@ void ShaderManager::linkProgram(std::string shaderProgramKey){
 
 	if(glGetError() != GL_NO_ERROR || linkStatus == GL_FALSE){
 
-		GLsizei* length = new GLsizei;
-		glGetProgramiv(shaderProgramID, GL_INFO_LOG_LENGTH, length); //Get the length of the compilation log
-		char* linkingLog = new char[*length];			 //Create the needed char array
-
+		GLsizei length;
+		glGetProgramiv(shaderProgramID, GL_INFO_LOG_LENGTH, &length); //Get the length of the compilation log
+		char* linkingLog = new char[length];			 //Create the needed char array
 		glGetProgramInfoLog(shaderProgramID, *length, NULL, linkingLog); //Get the compilation log
+		std::string linkingLogString(linkingLog);	//Save the linking log in a string
+		delete linkingLog[];	//Free the allocated memory
 
-		throw std::exception(("ERROR: \nLinker log of shader-programm "+shaderProgramKey+":\n"+std::string(linkingLog)).c_str());
+		throw std::exception(("ERROR: \nLinker log of shader-programm "+shaderProgramKey+":\n"+linkingLogString).c_str());
 
 	}
 }
