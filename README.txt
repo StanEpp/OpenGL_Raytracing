@@ -6,7 +6,7 @@ I used the boost library and the Rply library for loading the .ply files.
 
 [SCENE DESCRIPTION]
 It is possible to create your own scenes using primitves like spheres, polygons and planes. 
-For lightnig you can use point lights and directional lights. 
+For lighting you can use point lights and directional lights. 
 I misused the .ply format as a scene descriptor. There you can define all the elements mentioned above
 and place them in the scene. For further information you can take a look at the two test scenes 
 "MirrorRoom.ply" and "CubeRoom.ply".
