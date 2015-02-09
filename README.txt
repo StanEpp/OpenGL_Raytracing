@@ -1,8 +1,13 @@
 This application is my first raytracer which uses OpenGL and its compute shader.
 The whole naive raytracing algorithm is written in GLSL and can be found in the file "cs.glsl". 
 
-[INFORMATION]
-I used the boost library and the Rply library for loading the .ply files.
+[USED LIBRARIES]
+Glew 1.11.0
+GLFW 3.0.4
+GLM 0.9.5.4
+xerces-c-3.1.1
+boost 1.56.0
+RPly 
 
 [SCENE DESCRIPTION]
 It is possible to create your own scenes using primitves like spheres, polygons and planes. 
