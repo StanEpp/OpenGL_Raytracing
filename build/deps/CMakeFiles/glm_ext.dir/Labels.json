@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/glm_ext"
+		},
+		{
+			"file" : "/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/glm_ext.rule"
+		},
+		{
+			"file" : "/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/glm_ext-complete.rule"
+		},
+		{
+			"file" : "/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-install.rule"
+		},
+		{
+			"file" : "/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-mkdir.rule"
+		},
+		{
+			"file" : "/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-download.rule"
+		},
+		{
+			"file" : "/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-patch.rule"
+		},
+		{
+			"file" : "/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-configure.rule"
+		},
+		{
+			"file" : "/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-build.rule"
+		},
+		{
+			"file" : "/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-skip-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"glm_ext"
+		],
+		"name" : "glm_ext"
+	}
+}

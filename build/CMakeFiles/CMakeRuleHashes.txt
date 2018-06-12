@@ -1,0 +1,19 @@
+# Hashes of file build rules.
+42532d298020684635ec3665fad10b1d deps/CMakeFiles/glfw_ext
+e9c2672f2f783d345767f0322a735778 deps/CMakeFiles/glfw_ext-complete
+42532d298020684635ec3665fad10b1d deps/CMakeFiles/glm_ext
+0254c739b2ac0690450db0527a8f73e7 deps/CMakeFiles/glm_ext-complete
+bf70be4b9ac4b4c7c74a6e32f6c6f933 deps/glfw/src/glfw_ext-stamp/glfw_ext-build
+a6e20c948a230998112c40b079b93153 deps/glfw/src/glfw_ext-stamp/glfw_ext-configure
+a36f2f520b48de939772b06e8ba98b93 deps/glfw/src/glfw_ext-stamp/glfw_ext-download
+6c8c25ccf264029eedf4eaedae4d56cd deps/glfw/src/glfw_ext-stamp/glfw_ext-install
+d99ac18fd3a9a41c485c25029dee374c deps/glfw/src/glfw_ext-stamp/glfw_ext-mkdir
+054954fa6aa83871d13e2e0e34c2ca21 deps/glfw/src/glfw_ext-stamp/glfw_ext-patch
+ed220008f3cc28564fff742f6f4f4f31 deps/glfw/src/glfw_ext-stamp/glfw_ext-skip-update
+3e23a3a7f446c141df58f82d88d96981 deps/glm/src/glm_ext-stamp/glm_ext-build
+60b7bdbd3b2fb316532e8e8d6e57339c deps/glm/src/glm_ext-stamp/glm_ext-configure
+bfbcb949301d1f507c261f0fe09d31e9 deps/glm/src/glm_ext-stamp/glm_ext-download
+a5300cd1da734cb53b3934432fd5e465 deps/glm/src/glm_ext-stamp/glm_ext-install
+a154ef709cd48c18caaccbad1c55d29e deps/glm/src/glm_ext-stamp/glm_ext-mkdir
+c78b6f3a91f51742409103e75be9bc01 deps/glm/src/glm_ext-stamp/glm_ext-patch
+e15b7ef3a015d48ed0a93257beb92b3c deps/glm/src/glm_ext-stamp/glm_ext-skip-update

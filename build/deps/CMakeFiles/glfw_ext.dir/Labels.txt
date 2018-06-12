@@ -1,0 +1,13 @@
+# Target labels
+ glfw_ext
+# Source files and their labels
+/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/glfw_ext
+/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/glfw_ext.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/glfw_ext-complete.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-stamp/glfw_ext-install.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-stamp/glfw_ext-mkdir.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-stamp/glfw_ext-download.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-stamp/glfw_ext-patch.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-stamp/glfw_ext-configure.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-stamp/glfw_ext-build.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-stamp/glfw_ext-skip-update.rule

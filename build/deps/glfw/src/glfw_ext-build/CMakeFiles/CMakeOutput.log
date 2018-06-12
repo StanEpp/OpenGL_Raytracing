@@ -1,0 +1,327 @@
+The system is: Linux - 4.16.13-2-ARCH - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is GNU, found in "/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/3.11.3/CompilerIdC/a.out"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_1806a/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_1806a.dir/build.make CMakeFiles/cmTC_1806a.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_1806a.dir/testCCompiler.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_1806a.dir/testCCompiler.c.o   -c /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_1806a
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1806a.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_1806a.dir/testCCompiler.c.o  -o cmTC_1806a 
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_391ca/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_391ca.dir/build.make CMakeFiles/cmTC_391ca.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_391ca.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_391ca.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.11/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_391ca
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_391ca.dir/link.txt --verbose=1
+/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_391ca.dir/CMakeCCompilerABI.c.o  -o cmTC_391ca 
+Using built-in specs.
+COLLECT_GCC=/usr/bin/cc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/lto-wrapper
+Target: x86_64-pc-linux-gnu
+Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++ --enable-shared --enable-threads=posix --enable-libmpx --with-system-zlib --with-isl --enable-__cxa_atexit --disable-libunwind-exceptions --enable-clocale=gnu --disable-libstdcxx-pch --disable-libssp --enable-gnu-unique-object --enable-linker-build-id --enable-lto --enable-plugin --enable-install-libiberty --with-linker-hash-style=gnu --enable-gnu-indirect-function --enable-multilib --disable-werror --enable-checking=release --enable-default-pie --enable-default-ssp
+Thread model: posix
+gcc version 8.1.1 20180531 (GCC) 
+COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_391ca' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccgJdbrN.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_391ca /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../.. CMakeFiles/cmTC_391ca.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_391ca' '-mtune=generic' '-march=x86-64'
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_391ca/fast"]
+  ignore line: [make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_391ca.dir/build.make CMakeFiles/cmTC_391ca.dir/build]
+  ignore line: [make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_391ca.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTC_391ca.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.11/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_391ca]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_391ca.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_391ca.dir/CMakeCCompilerABI.c.o  -o cmTC_391ca ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/usr/bin/cc]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/lto-wrapper]
+  ignore line: [Target: x86_64-pc-linux-gnu]
+  ignore line: [Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++ --enable-shared --enable-threads=posix --enable-libmpx --with-system-zlib --with-isl --enable-__cxa_atexit --disable-libunwind-exceptions --enable-clocale=gnu --disable-libstdcxx-pch --disable-libssp --enable-gnu-unique-object --enable-linker-build-id --enable-lto --enable-plugin --enable-install-libiberty --with-linker-hash-style=gnu --enable-gnu-indirect-function --enable-multilib --disable-werror --enable-checking=release --enable-default-pie --enable-default-ssp]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 8.1.1 20180531 (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_391ca' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccgJdbrN.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_391ca /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../.. CMakeFiles/cmTC_391ca.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib/crtn.o]
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/collect2] ==> ignore
+    arg [-plugin] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/liblto_plugin.so] ==> ignore
+    arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/lto-wrapper] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccgJdbrN.res] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+    arg [-plugin-opt=-pass-through=-lc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+    arg [--build-id] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [--hash-style=gnu] ==> ignore
+    arg [-m] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [-export-dynamic] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [-pie] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_391ca] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib/Scrt1.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib/crti.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/crtbeginS.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1]
+    arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib]
+    arg [-L/lib/../lib] ==> dir [/lib/../lib]
+    arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+    arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../..]
+    arg [CMakeFiles/cmTC_391ca.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [-lc] ==> lib [c]
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/crtendS.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib/crtn.o] ==> ignore
+  collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1]
+  collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../../../lib] ==> [/usr/lib]
+  collapse library dir [/lib/../lib] ==> [/lib]
+  collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+  collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1/../../..] ==> [/usr/lib]
+  implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+  implicit dirs: [/usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1;/usr/lib;/lib]
+  implicit fwks: []
+
+
+
+
+Detecting C [-std=c11] compiler features compiled with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_58ebc/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_58ebc.dir/build.make CMakeFiles/cmTC_58ebc.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_58ebc.dir/feature_tests.c.o
+/usr/bin/cc   -std=c11 -o CMakeFiles/cmTC_58ebc.dir/feature_tests.c.o   -c /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_58ebc
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_58ebc.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_58ebc.dir/feature_tests.c.o  -o cmTC_58ebc 
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: C_FEATURE:1c_function_prototypes
+    Feature record: C_FEATURE:1c_restrict
+    Feature record: C_FEATURE:1c_static_assert
+    Feature record: C_FEATURE:1c_variadic_macros
+
+
+Detecting C [-std=c99] compiler features compiled with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_aee63/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_aee63.dir/build.make CMakeFiles/cmTC_aee63.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_aee63.dir/feature_tests.c.o
+/usr/bin/cc   -std=c99 -o CMakeFiles/cmTC_aee63.dir/feature_tests.c.o   -c /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_aee63
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_aee63.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_aee63.dir/feature_tests.c.o  -o cmTC_aee63 
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: C_FEATURE:1c_function_prototypes
+    Feature record: C_FEATURE:1c_restrict
+    Feature record: C_FEATURE:0c_static_assert
+    Feature record: C_FEATURE:1c_variadic_macros
+
+
+Detecting C [-std=c90] compiler features compiled with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_0e6d8/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_0e6d8.dir/build.make CMakeFiles/cmTC_0e6d8.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_0e6d8.dir/feature_tests.c.o
+/usr/bin/cc   -std=c90 -o CMakeFiles/cmTC_0e6d8.dir/feature_tests.c.o   -c /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_0e6d8
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0e6d8.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_0e6d8.dir/feature_tests.c.o  -o cmTC_0e6d8 
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: C_FEATURE:1c_function_prototypes
+    Feature record: C_FEATURE:0c_restrict
+    Feature record: C_FEATURE:0c_static_assert
+    Feature record: C_FEATURE:0c_variadic_macros
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_24c06/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_24c06.dir/build.make CMakeFiles/cmTC_24c06.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_24c06.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_24c06.dir/CheckIncludeFile.c.o   -c /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_24c06
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_24c06.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_24c06.dir/CheckIncludeFile.c.o  -o cmTC_24c06 
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function pthread_create exists in the pthread passed with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_7249a/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_7249a.dir/build.make CMakeFiles/cmTC_7249a.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_7249a.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_7249a.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.11/Modules/CheckFunctionExists.c
+Linking C executable cmTC_7249a
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7249a.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_7249a.dir/CheckFunctionExists.c.o  -o cmTC_7249a -lpthread 
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function XOpenDisplay exists in the /usr/lib/libX11.so;/usr/lib/libXext.so passed with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_2c3a6/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_2c3a6.dir/build.make CMakeFiles/cmTC_2c3a6.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_2c3a6.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=XOpenDisplay   -o CMakeFiles/cmTC_2c3a6.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.11/Modules/CheckFunctionExists.c
+Linking C executable cmTC_2c3a6
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2c3a6.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=XOpenDisplay    -rdynamic CMakeFiles/cmTC_2c3a6.dir/CheckFunctionExists.c.o  -o cmTC_2c3a6 /usr/lib/libX11.so /usr/lib/libXext.so 
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function gethostbyname exists passed with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_c67a1/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_c67a1.dir/build.make CMakeFiles/cmTC_c67a1.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c67a1.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=gethostbyname   -o CMakeFiles/cmTC_c67a1.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.11/Modules/CheckFunctionExists.c
+Linking C executable cmTC_c67a1
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c67a1.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=gethostbyname    -rdynamic CMakeFiles/cmTC_c67a1.dir/CheckFunctionExists.c.o  -o cmTC_c67a1 
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function connect exists passed with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_35116/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_35116.dir/build.make CMakeFiles/cmTC_35116.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_35116.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=connect   -o CMakeFiles/cmTC_35116.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.11/Modules/CheckFunctionExists.c
+Linking C executable cmTC_35116
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_35116.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=connect    -rdynamic CMakeFiles/cmTC_35116.dir/CheckFunctionExists.c.o  -o cmTC_35116 
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function remove exists passed with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_41e4b/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_41e4b.dir/build.make CMakeFiles/cmTC_41e4b.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_41e4b.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=remove   -o CMakeFiles/cmTC_41e4b.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.11/Modules/CheckFunctionExists.c
+Linking C executable cmTC_41e4b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_41e4b.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=remove    -rdynamic CMakeFiles/cmTC_41e4b.dir/CheckFunctionExists.c.o  -o cmTC_41e4b 
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function shmat exists passed with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_58be2/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_58be2.dir/build.make CMakeFiles/cmTC_58be2.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_58be2.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=shmat   -o CMakeFiles/cmTC_58be2.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.11/Modules/CheckFunctionExists.c
+Linking C executable cmTC_58be2
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_58be2.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=shmat    -rdynamic CMakeFiles/cmTC_58be2.dir/CheckFunctionExists.c.o  -o cmTC_58be2 
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function IceConnectionNumber exists in the ICE passed with the following output:
+Change Dir: /home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_39281/fast"
+make[3]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTC_39281.dir/build.make CMakeFiles/cmTC_39281.dir/build
+make[4]: Entering directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_39281.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=IceConnectionNumber   -o CMakeFiles/cmTC_39281.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.11/Modules/CheckFunctionExists.c
+Linking C executable cmTC_39281
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_39281.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=IceConnectionNumber    -rdynamic CMakeFiles/cmTC_39281.dir/CheckFunctionExists.c.o  -o cmTC_39281 -lICE 
+make[4]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+make[3]: Leaving directory '/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/CMakeTmp'
+
+

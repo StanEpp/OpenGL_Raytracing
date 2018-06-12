@@ -1,0 +1,17 @@
+dirX=0
+dirY=0
+dirZ=1
+posX=0
+posY=0
+posZ=0
+upX=0
+upY=1
+upZ=0
+fovY=45
+velocityRotate=0.005
+velocityTranslate=0.200000003
+reflectionDepth=5
+maxFPS=60
+width=1024
+height=768
+windowed=1

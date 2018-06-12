@@ -1,0 +1,3 @@
+repository='external project URL'
+module='https://github.com/glfw/glfw/releases/download/3.2.1/glfw-3.2.1.zip'
+tag=''

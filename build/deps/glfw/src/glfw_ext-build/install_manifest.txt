@@ -1,0 +1,10 @@
+/home/stan/Projects/OpenGL_Raytracing/build/deps/installed/include/GLFW/glfw3native.h
+/home/stan/Projects/OpenGL_Raytracing/build/deps/installed/include/GLFW/glfw3.h
+/home/stan/Projects/OpenGL_Raytracing/build/deps/installed/lib/cmake/glfw3/glfw3Config.cmake
+/home/stan/Projects/OpenGL_Raytracing/build/deps/installed/lib/cmake/glfw3/glfw3ConfigVersion.cmake
+/home/stan/Projects/OpenGL_Raytracing/build/deps/installed/lib/cmake/glfw3/glfw3Targets.cmake
+/home/stan/Projects/OpenGL_Raytracing/build/deps/installed/lib/cmake/glfw3/glfw3Targets-noconfig.cmake
+/home/stan/Projects/OpenGL_Raytracing/build/deps/installed/lib/pkgconfig/glfw3.pc
+/home/stan/Projects/OpenGL_Raytracing/build/deps/installed/lib/libglfw.so.3.2
+/home/stan/Projects/OpenGL_Raytracing/build/deps/installed/lib/libglfw.so.3
+/home/stan/Projects/OpenGL_Raytracing/build/deps/installed/lib/libglfw.so

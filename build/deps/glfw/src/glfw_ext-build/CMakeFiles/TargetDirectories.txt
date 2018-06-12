@@ -1,0 +1,14 @@
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/install/strip.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/edit_cache.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/uninstall.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/rebuild_cache.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/list_install_components.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/install/local.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/CMakeFiles/install.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/src/CMakeFiles/install/strip.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/src/CMakeFiles/edit_cache.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/src/CMakeFiles/glfw.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/src/CMakeFiles/rebuild_cache.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/src/CMakeFiles/list_install_components.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/src/CMakeFiles/install/local.dir
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glfw/src/glfw_ext-build/src/CMakeFiles/install.dir

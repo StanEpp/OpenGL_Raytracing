@@ -1,4 +1,4 @@
-#include "shaderManager.h"
+#include "ShaderManager.h"
 
 std::string ShaderManager::getFileContents(const char* filename) const{
 	std::ifstream in(filename, std::ios::in | std::ios::binary);

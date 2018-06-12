@@ -1,0 +1,13 @@
+# Target labels
+ glm_ext
+# Source files and their labels
+/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/glm_ext
+/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/glm_ext.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/glm_ext-complete.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-install.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-mkdir.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-download.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-patch.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-configure.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-build.rule
+/home/stan/Projects/OpenGL_Raytracing/build/deps/glm/src/glm_ext-stamp/glm_ext-skip-update.rule
