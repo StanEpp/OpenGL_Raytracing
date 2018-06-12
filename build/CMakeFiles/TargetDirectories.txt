@@ -1,7 +1,0 @@
-/home/stan/Projects/OpenGL_Raytracing/build/CMakeFiles/rebuild_cache.dir
-/home/stan/Projects/OpenGL_Raytracing/build/CMakeFiles/OpenGL_Raytracer.dir
-/home/stan/Projects/OpenGL_Raytracing/build/CMakeFiles/edit_cache.dir
-/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/edit_cache.dir
-/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/glm_ext.dir
-/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/rebuild_cache.dir
-/home/stan/Projects/OpenGL_Raytracing/build/deps/CMakeFiles/glfw_ext.dir

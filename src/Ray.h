@@ -1,10 +1,8 @@
-#ifndef _RAY_
-#define _RAY_
+#pragma once
 
-struct Ray{
-	glm::vec3	origin;
-	glm::vec3	dir;
+#include <glm/glm.hpp>
+
+struct Ray {
+    glm::vec3 origin;
+    glm::vec3 dir;
 };
-
-
-#endif

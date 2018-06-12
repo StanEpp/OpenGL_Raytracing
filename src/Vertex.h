@@ -1,9 +1,8 @@
-#ifndef _VERTEX_
-#define _VERTEX_
+#pragma once
 
-struct Vertex{
-	glm::vec4 pos;
-	glm::vec2 texCoor;
+#include <glm/glm.hpp>
+
+struct Vertex {
+    glm::vec4 pos;
+    glm::vec2 texCoor;
 };
-
-#endif
