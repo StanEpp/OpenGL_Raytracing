@@ -37,11 +37,11 @@ set(HEADER_FILES
     src/SceneLoader.h
     src/SceneReader.h
     src/ShaderBaseModel.h
-    src/ShaderManager.h
+    src/ShaderManager.hpp
     src/Texture.h
     src/TextureRenderer.h
     src/Vertex.h
-    src/SettingsLoader.h
+    src/ConfigLoader.h
 )
 
 add_executable(OpenGL_Raytracer ${SOURCE_FILES} ${HEADER_FILES})
