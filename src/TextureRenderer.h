@@ -1,5 +1,4 @@
-#ifndef _TEXTURERENDERER_
-#define _TEXTURERENDERER_
+#pragma once
 
 #define GLM_FORCE_RADIANS
 
@@ -8,7 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-#include "ShaderManager.h"
+#include "ShaderManager.hpp"
 #include "Texture.h"
 #include "Vertex.h"
 #include "Camera.h"
@@ -16,18 +15,16 @@
 
 class TextureRenderer{
 private:
-	int							_width, _height;
+    int _width, _height;
 
-	std::string					_shaderProgName;
-	GLuint						_vertexUVBufferID, _VertexArrayID;
-	std::shared_ptr<Texture>	_texture;
+    std::string _shaderProgName;
+    GLuint _vertexUVBufferID, _VertexArrayID;
+    std::shared_ptr<Texture> _texture;
 
-	void initialize();
+    void initialize();
 public:
-	TextureRenderer(int width, int height, std::shared_ptr<Texture>& texture);
-	~TextureRenderer();
-		
-	void draw();
-};
+    TextureRenderer(int width, int height, std::shared_ptr<Texture>& texture);
+    ~TextureRenderer();
 
-#endif
+    void draw();
+};

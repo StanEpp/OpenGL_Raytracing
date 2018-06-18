@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 
 struct Settings
@@ -59,7 +60,7 @@ public:
         }
     }
 
-    Settings getSettings() const { return m_settings; }
+    Settings settings() const { return m_settings; }
 
 private:
     Settings m_settings;

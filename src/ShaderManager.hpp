@@ -10,10 +10,7 @@
 #include <GLFW/glfw3.h>
 #endif
 
-#include "src/rendering/ShaderBaseModel.hpp"
-
-namespace cdwarfs::render
-{
+#include "ShaderBaseModel.hpp"
 
 template<class T, class...>
 struct are_same : std::true_type {};
@@ -142,5 +139,3 @@ private:
 
     const std::string errVal(GLenum error);
 };
-
-}

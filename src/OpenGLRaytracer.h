@@ -1,11 +1,10 @@
-#ifndef _OPENGLRAYTRACER_
-#define _OPENGLRAYTRACER_
+#pragma once
 
 #define WORK_GROUP_SIZE 16
 
 #include <memory>
 
-#include "ShaderManager.h"
+#include "ShaderManager.hpp"
 #include "Texture.h"
 #include "Camera.h"
 #include "Lights.h"
@@ -14,19 +13,18 @@
 class OpenGLRaytracer{
 private:
 
-	GLuint*						_storageBufferIDs;
-	std::string					_shaderProgName;
-	std::shared_ptr<Texture>	_texture;
+    GLuint* _storageBufferIDs;
+    std::string _shaderProgName;
+    std::shared_ptr<Texture> _texture;
+    std::shared_ptr<ShaderManager> m_shManager;
 
-	void createComputeshader(Camera&,int);
+    void createComputeshader(Camera&,int);
 
 public:
-	OpenGLRaytracer(std::shared_ptr<Texture>&, Camera&, int reflectionDepth);
-	~OpenGLRaytracer();
+    OpenGLRaytracer(std::shared_ptr<Texture>&, Camera&, int reflectionDepth, std::shared_ptr<Texture>& shManager);
+    ~OpenGLRaytracer();
 
-	void 			renderScene(Camera& , int , int, int);
-	std::string		getCompShaderProgName();
-	GLuint* 		getStorageBufferIDs();
+    void renderScene(Camera& , int , int, int);
+    std::string getCompShaderProgName();
+    GLuint* getStorageBufferIDs();
 };
-
-#endif

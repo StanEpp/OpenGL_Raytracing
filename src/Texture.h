@@ -1,26 +1,23 @@
-#ifndef _TEXTURE_
-#define _TEXTURE_
+#pragma once
 
-#include "ShaderManager.h"
+#include "ShaderManager.hpp"
 #include <glm/glm.hpp>
 
 class Texture{
 private:
-	int		_width, _height;
+    int _width, _height;
 
-	GLuint	_textureID;
-	GLuint	_textureFormat;
+    GLuint _textureID;
+    GLuint _textureFormat;
 
-	void create();
+    void create();
 public:
-	Texture(int width, int height, GLuint textureFormat);
-	~Texture();
+    Texture(int width, int height, GLuint textureFormat);
+    ~Texture();
 
-	GLuint	getID();
-	GLuint	getFormat();
-	int		getWidth();
-	int		getHeight();
+    GLuint getID();
+    GLuint getFormat();
+    int getWidth();
+    int getHeight();
 
 };
-
-#endif
