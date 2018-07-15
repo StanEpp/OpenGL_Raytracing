@@ -3,6 +3,7 @@
 #include "OpenGLRaytracer.h"
 #include "Primitives.h"
 #include "Scene.h"
+#include "ShaderManager.hpp"
 
 class SceneLoader{
 private:
@@ -13,16 +14,14 @@ private:
     int *_oIndices, *_mIndices, *_lIndices, *_oOffsets, *_mOffsets, *_lOffsets;
     GLuint _copyBufferIDs[2];
     GLenum _props[1], _props2[1];
+    std::shared_ptr<ShaderManager> m_shManager;
 
-    void initialize(OpenGLRaytracer&);
+    void initialize(const std::shared_ptr<OpenGLRaytracer> &raytracer);
 
 public:
     SceneLoader() = delete;
 
-    SceneLoader(OpenGLRaytracer& ogl) :
-        _numberOfObjInShader(0), _numberOfMaterialsInShader(0), _numberOfLightsInShader(0) {
-        initialize(ogl);
-    }
+    SceneLoader(const std::shared_ptr<OpenGLRaytracer> &raytracer, const std::shared_ptr<ShaderManager> &shManager);
 
     ~SceneLoader(){
         delete[] _oIndices;

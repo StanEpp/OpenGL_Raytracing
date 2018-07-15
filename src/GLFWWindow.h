@@ -37,7 +37,7 @@ public:
         return _height;
     }
 
-    GLFWwindow* getGLFWwindow(){
+    GLFWwindow* getGLFWwindow() const {
         return _window;
     }
 

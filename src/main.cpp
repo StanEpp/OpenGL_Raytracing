@@ -6,13 +6,12 @@
 #include <memory>
 #include "GLFWWindow.h"
 #include "ShaderManager.hpp"
-#include "GLFWInput.h"
 #include "TextureRenderer.h"
 #include "OpenGLRaytracer.h"
 #include "GLFWTimer.h"
 #include "SceneReader.h"
 #include "SceneLoader.h"
-#include "InputControl.h"
+#include "GLFWInput.hpp"
 #include "ConfigLoader.h"
 
 int main(int argc, char* argv[]){
@@ -47,16 +46,16 @@ int main(int argc, char* argv[]){
 
     try{
         auto shManager = std::make_shared<ShaderManager>();
-        auto camera = std::make_shared<Camera>(settings.width, settings.height, settings.fovY,
+        auto camera = std::make_shared<Camera>(width, height, settings.fovY,
                                                glm::vec3(0, 0, 0), glm::vec3(0, 0, 1), glm::vec3(0, 1, 0));
 
-        auto tex = std::make_shared<Texture>(settings.width, settings.height, GL_RGBA8);
-        auto texRenderer = std::make_shared<TextureRenderer>(settings.width, height, tex);
+        auto tex = std::make_shared<Texture>(width, height, GL_RGBA8);
+        auto texRenderer = std::make_shared<TextureRenderer>(width, height, tex, shManager);
         auto ort = std::make_shared<OpenGLRaytracer>(tex, *camera.get(), reflectionDepth, shManager);
-        auto inputControl = std::make_shared<InputControl>(settings.velocityRotate, settings.velocityTranslate);
+        auto inputControl = std::make_shared<GLFWInput>();
         auto scene = std::make_shared<Scene>();
         auto sceneReader = std::make_shared<SceneReader>();
-        auto sceneLoader = std::make_shared<SceneLoader>(*ort.get());
+        auto sceneLoader = std::make_shared<SceneLoader>(ort, shManager);
 
         for(int i = 1; i < argc; ++i){
             std::cout << "Loading Scene: " << argv[i] << std::endl;
@@ -73,7 +72,7 @@ int main(int argc, char* argv[]){
             if(timer.getTimeDiffWithoutActualization() > static_cast<double>(1.0)/static_cast<double>(maxFPS)){
                 timer.getTimeDiff();
 
-                inputControl->processInput((*camera.get()), reflectionDepth, wnd->getGLFWwindow());
+                inputControl->updateInput();
                 camera->update();
 
                 ort->renderScene((*camera.get()), settings.width, settings.height, reflectionDepth);
@@ -82,7 +81,7 @@ int main(int argc, char* argv[]){
 
                 wnd->swapBuffers();
 
-                if(input.isKeyPressed(GLFW_KEY_ESCAPE, wnd->getGLFWwindow())){
+                if(inputControl->isKeyPressed(GLFW_KEY_ESCAPE)){
                     running = false;
                 }
                 frameCounter++;

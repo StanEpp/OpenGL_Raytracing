@@ -21,7 +21,7 @@ private:
     void createComputeshader(Camera&,int);
 
 public:
-    OpenGLRaytracer(std::shared_ptr<Texture>&, Camera&, int reflectionDepth, std::shared_ptr<Texture>& shManager);
+    OpenGLRaytracer(std::shared_ptr<Texture>&, Camera&, int reflectionDepth, std::shared_ptr<ShaderManager>& shManager);
     ~OpenGLRaytracer();
 
     void renderScene(Camera& , int , int, int);

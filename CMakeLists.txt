@@ -9,7 +9,6 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 set(SOURCE_FILES
     src/GLFWInput.cpp
-    src/InputControl.cpp
     src/main.cpp
     src/OpenGLRaytracer.cpp
     src/gl3w.c
@@ -26,7 +25,7 @@ set(HEADER_FILES
     src/GLFWWindow.h
     src/InhomogenousContainer.h
     src/Input.h
-    src/InputControl.h
+    src/GLFWInput.hpp
     src/Lights.h
     src/OpenGLRaytracer.h
     src/Primitives.h
@@ -45,5 +44,5 @@ set(HEADER_FILES
 
 add_executable(OpenGL_Raytracer ${SOURCE_FILES} ${HEADER_FILES})
 add_dependencies(OpenGL_Raytracer glfw_ext glm_ext boost_spirit_ext)
-target_link_libraries(OpenGL_Raytracer PUBLIC glfw libstdc++)
+target_link_libraries(OpenGL_Raytracer PUBLIC glfw dl)
 

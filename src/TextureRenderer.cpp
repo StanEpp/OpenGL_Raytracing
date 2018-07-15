@@ -1,9 +1,12 @@
 #include "TextureRenderer.h"
 
-TextureRenderer::TextureRenderer(int width, int height, std::shared_ptr<Texture>& texture) :
+TextureRenderer::TextureRenderer(int width, int height,
+                                 const std::shared_ptr<Texture> &texture,
+                                 const std::shared_ptr<ShaderManager> &shManager) :
     _width(width),
     _height(height),
-    _texture(texture)
+    _texture(texture),
+    m_shManager(shManager)
 {
     _shaderProgName = "textureRenderer";
     initialize();
@@ -30,27 +33,26 @@ void TextureRenderer::initialize()
     glBindBuffer(GL_ARRAY_BUFFER, _vertexUVBufferID);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
 
-    auto shManager = ShaderManager::getInstance();
-    shManager->loadShader(".\\vs.glsl", "vertexShader", GL_VERTEX_SHADER);
-    shManager->loadShader(".\\fs.glsl", "fragmentShader", GL_FRAGMENT_SHADER);
+    m_shManager->loadShader(".\\vs.glsl", "vertexShader", GL_VERTEX_SHADER);
+    m_shManager->loadShader(".\\fs.glsl", "fragmentShader", GL_FRAGMENT_SHADER);
 
-    shManager->createProgram(_shaderProgName);
+    m_shManager->createProgram(_shaderProgName);
 
-    shManager->attachShader("vertexShader", _shaderProgName);
-    shManager->attachShader("fragmentShader", _shaderProgName);
+    m_shManager->attachShader("vertexShader", _shaderProgName);
+    m_shManager->attachShader("fragmentShader", _shaderProgName);
 
-    shManager->linkProgram(_shaderProgName);
-    shManager->useProgram(_shaderProgName);
+    m_shManager->linkProgram(_shaderProgName);
+    m_shManager->useProgram(_shaderProgName);
 
-    shManager->deleteShader("vertexShader");
-    shManager->deleteShader("fragmentShader");
+    m_shManager->deleteShader("vertexShader");
+    m_shManager->deleteShader("fragmentShader");
 
     assert(glGetError() == GL_NO_ERROR);
 }
 
 void TextureRenderer::draw()
 {
-    glUseProgram(ShaderManager::getInstance()->getShaderProgramID(_shaderProgName));
+    glUseProgram(m_shManager->getShaderProgramID(_shaderProgName));
 
     glBindBuffer(GL_ARRAY_BUFFER, _vertexUVBufferID);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);

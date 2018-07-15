@@ -337,7 +337,7 @@ GLint ShaderManager::getUniformLocation(const std::string& shaderProgram, const 
     return getUniformLocation(getShaderProgramID(shaderProgram), name);
 }
 
-std::string ShaderManager::errVal(GLenum error)
+const std::string ShaderManager::errVal(GLenum error)
 {
     if (error == GL_NO_ERROR) {
         return "GL_NO_ERROR";

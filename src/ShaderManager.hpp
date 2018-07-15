@@ -21,8 +21,7 @@ struct are_same<T, U, TT...> :
 {};
 
 /* Usually used as Singleton. But for this small project it suffices to use it
-*  as a plain object in ParticleSystem, since it's the only instance in the whole
-*  project.
+*  as a plain object in since it's the only instance in the whole project.
 *
 *  Note that not all the functionalities of this class are used in this project.
 */
