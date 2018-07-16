@@ -23,8 +23,6 @@ set(HEADER_FILES
     src/Camera.h
     src/GLFWInput.h
     src/GLFWWindow.h
-    src/InhomogenousContainer.h
-    src/Input.h
     src/GLFWInput.hpp
     src/Lights.h
     src/OpenGLRaytracer.h
