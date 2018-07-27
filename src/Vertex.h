@@ -2,7 +2,8 @@
 
 #include <glm/glm.hpp>
 
-struct Vertex {
+struct Vertex
+{
     glm::vec4 pos;
     glm::vec2 texCoor;
 };

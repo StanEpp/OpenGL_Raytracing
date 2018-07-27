@@ -9,29 +9,35 @@
 
 namespace objSpirit{
 
-enum class Warnings : unsigned int {
+enum class Warnings : unsigned int
+{
     Unused_Material =    1 << 0,
     Unknown_Expression = 1 << 1,
     All = ~(unsigned int)(0),
     No = 0
 };
 
-constexpr inline int operator&(const Warnings x, const Warnings y) {
+constexpr inline int operator&(const Warnings x, const Warnings y)
+{
     return static_cast<int>(x)& static_cast<int>(y);
 }
 
-constexpr inline Warnings operator|(const Warnings x, const Warnings y) {
+constexpr inline Warnings operator|(const Warnings x, const Warnings y)
+{
     return static_cast<Warnings>(static_cast<int>(x) | static_cast<int>(y));
 }
 
-constexpr inline bool operator==(const Warnings x, const Warnings y){
+constexpr inline bool operator==(const Warnings x, const Warnings y)
+{
     return static_cast<int>(x) == static_cast<int>(y);
 }
 
-class objLoader{
+class objLoader
+{
     using FaceDesc = std::array<std::array<int64_t, 3>, 3>;
 
-    struct MaterialDesc{
+    struct MaterialDesc
+    {
         std::string name;
         std::array<float, 3> amb;
         std::array<float, 3> diff;
@@ -56,7 +62,8 @@ class objLoader{
         {}
     };
 
-    struct Material {
+    struct Material
+    {
         MaterialDesc        desc;
         std::vector<size_t> faces;
         std::vector<size_t> spheres;
@@ -66,27 +73,31 @@ class objLoader{
         Material() : loaded(false) {}
     };
 
-    struct Group {
+    struct Group
+    {
         std::string         name;
         std::vector<size_t> faces;
         std::vector<size_t> spheres;
         std::vector<size_t> planes;
     };
 
-    struct Face {
+    struct Face
+    {
         FaceDesc face;
         size_t material;
         size_t group;
     };
 
-    struct Sphere {
+    struct Sphere
+    {
         int64_t center;
         size_t material;
         float radius;
         size_t group;
     };
 
-    struct Plane {
+    struct Plane
+    {
         int64_t origin;
         int64_t normal;
         size_t material;
@@ -95,7 +106,8 @@ class objLoader{
 
 public:
 
-    struct Data{
+    struct Data
+    {
         std::vector<std::array<float, 3>> v;
         std::vector<std::array<float, 2>> vt;
         std::vector<std::array<float, 3>> vn;

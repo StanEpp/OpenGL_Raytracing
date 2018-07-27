@@ -18,17 +18,6 @@ externalproject_add(glm_ext
     URL https://github.com/g-truc/glm/archive/0.9.9-a2.zip
 )
 
-externalproject_add(boost_spirit_ext
-    PREFIX ${DEPENDENCY_DIR}/boost-spirit
-    INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory
-                    <SOURCE_DIR>/boost-spirit ${DEPENDENCY_INSTALL_INCLUDE_DIR}/boost-spirit
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
-    UPDATE_COMMAND ""
-    UPDATE_DISCONNECTED 1
-    URL https://github.com/boostorg/spirit/archive/develop.zip
-)
-
 externalproject_add(glfw_ext
     PREFIX ${DEPENDENCY_DIR}/glfw
     CMAKE_ARGS -DGLFW_BUILD_TESTS=OFF

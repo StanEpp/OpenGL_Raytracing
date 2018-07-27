@@ -1,24 +1,14 @@
 #pragma once
 
-#ifndef _GL3W_
-#define _GL3W_
-    #include <GL\gl3w.h>
-    #include <GLFW\glfw3.h>
-#endif
-
 #include <unordered_set>
 #include <array>
+
+#include <GLFW/glfw3.h>
+
 #include "GLFWWindow.h"
 
 class GLFWInput
 {
-private:
-    double m_xPos, m_yPos;
-    double m_xDiff, m_yDiff;
-    std::array<bool, 3> m_mouseButtonPressed;
-    std::unordered_set<unsigned int>  m_keyPressed;
-    GLFWwindow* m_window;
-
 public:
     GLFWInput() :
         m_xPos(0), m_yPos(0),
@@ -83,6 +73,17 @@ public:
         return false;
     }
 
-    void setMousePos(double xpos, double ypos){ glfwSetCursorPos(m_window, xpos, ypos); }
+    void setMousePos(double xpos, double ypos)
+    {
+        glfwSetCursorPos(m_window, xpos, ypos);
+    }
 
+private:
+    double m_xPos;
+    double m_yPos;
+    double m_xDiff;
+    double m_yDiff;
+    std::array<bool, 3> m_mouseButtonPressed;
+    std::unordered_set<unsigned int> m_keyPressed;
+    GLFWwindow* m_window;
 };

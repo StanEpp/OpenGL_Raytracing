@@ -9,21 +9,9 @@
 
 #include "ShaderManager.hpp"
 #include "Texture.h"
-#include "Vertex.h"
-#include "Camera.h"
-#include "Ray.h"
 
 class TextureRenderer
 {
-private:
-    int _width, _height;
-
-    std::string _shaderProgName;
-    GLuint _vertexUVBufferID, _VertexArrayID;
-    std::shared_ptr<Texture> _texture;
-    std::shared_ptr<ShaderManager> m_shManager;
-
-    void initialize();
 public:
     TextureRenderer(int width, int height,
                     const std::shared_ptr<Texture> &texture,
@@ -31,4 +19,15 @@ public:
     ~TextureRenderer();
 
     void draw();
+private:
+    void initialize();
+
+    int m_width;
+    int m_height;
+    std::string m_shaderProgName;
+    GLuint m_vertexUVBufferID;
+    GLuint m_VertexArrayID;
+    std::shared_ptr<Texture> m_texture;
+    std::shared_ptr<ShaderManager> m_shManager;
+
 };

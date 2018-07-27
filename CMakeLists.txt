@@ -7,8 +7,9 @@ add_subdirectory(deps)
 include_directories(${DEPENDENCY_INCLUDE_DIR})
 include_directories(${CMAKE_SOURCE_DIR})
 
+find_package(Boost REQUIRED)
+
 set(SOURCE_FILES
-    src/GLFWInput.cpp
     src/main.cpp
     src/OpenGLRaytracer.cpp
     src/gl3w.c
@@ -21,7 +22,6 @@ set(SOURCE_FILES
 
 set(HEADER_FILES
     src/Camera.h
-    src/GLFWInput.h
     src/GLFWWindow.h
     src/GLFWInput.hpp
     src/Lights.h
@@ -41,6 +41,6 @@ set(HEADER_FILES
 )
 
 add_executable(OpenGL_Raytracer ${SOURCE_FILES} ${HEADER_FILES})
-add_dependencies(OpenGL_Raytracer glfw_ext glm_ext boost_spirit_ext)
+add_dependencies(OpenGL_Raytracer glfw_ext glm_ext)
 target_link_libraries(OpenGL_Raytracer PUBLIC glfw dl)
 

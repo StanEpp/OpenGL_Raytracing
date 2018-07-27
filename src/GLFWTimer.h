@@ -1,53 +1,49 @@
-#ifndef _GLFWTIMER_
-#define _GLFWTIMER_
+#pragma once
 
-#ifndef _GLEW_
-#define _GLEW_
-    #include <GL\glew.h>
-    #include <GFWL\glfw3.h>
-#endif
+#include <GLFW/glfw3.h>
 
-class GLFWTimer{
+class GLFWTimer
+{
 private:
-    double		_time;
-    double		_oldTime;
+    double m_time{0};
+    double m_oldTime{0};
 
 public:
-    GLFWTimer() : _time(0), _oldTime(0){}
-    ~GLFWTimer(){}
-
     //Receives time since glfwInit() call
-    double	getTime() const{
-        return _time + glfwGetTime();
-    }	
+    double getTime() const
+    {
+        return m_time + glfwGetTime();
+    }
 
     //Returns the time difference since the last getTimeDiff() call
-    double	getTimeDiff(){
+    double getTimeDiff()
+    {
         double currTime = getTime();
-        double timeDiff = currTime - _oldTime;
-        _oldTime = currTime;
-        
+        double timeDiff = currTime - m_oldTime;
+        m_oldTime = currTime;
+
         return timeDiff;
     }
 
     //Returns the time difference since the last getTimeDiff() call
-    double getTimeDiffWithoutActualization() const{
+    double getTimeDiffWithoutActualization() const
+    {
         double currTime = getTime();
-        double timeDiff = currTime - _oldTime;
-        
+        double timeDiff = currTime - m_oldTime;
+
         return timeDiff;
     }
 
     //Returns the time since the last resetTime() call
-    double	getRefreshedTime() const{
+    double getRefreshedTime() const
+    {
         return glfwGetTime();
     }
 
     //Resets the time to 0
-    void	resetTime(){
-        _time += glfwGetTime();
+    void resetTime()
+    {
+        m_time += glfwGetTime();
         glfwSetTime(0.0);
     }
 };
-
-#endif

@@ -3,14 +3,8 @@
 #include "ShaderManager.hpp"
 #include <glm/glm.hpp>
 
-class Texture{
-private:
-    int _width, _height;
-
-    GLuint _textureID;
-    GLuint _textureFormat;
-
-    void create();
+class Texture
+{
 public:
     Texture(int width, int height, GLuint textureFormat);
     ~Texture();
@@ -19,5 +13,13 @@ public:
     GLuint getFormat();
     int getWidth();
     int getHeight();
+
+private:
+    void create();
+
+    int m_width;
+    int m_height;
+    GLuint m_textureID;
+    GLuint m_textureFormat;
 
 };

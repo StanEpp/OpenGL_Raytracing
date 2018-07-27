@@ -8,9 +8,9 @@ struct Camera{
 
 //attenuation.w : 1 = Point light; 2 = Directional light
 struct Light{
-    vec4	pos_dir;
-    vec4	color;
-    vec4	attenuation;
+    vec4 pos_dir;
+    vec4 color;
+    vec4 attenuation;
 };
 
 struct Material{

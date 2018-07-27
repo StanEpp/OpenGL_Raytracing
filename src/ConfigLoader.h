@@ -17,7 +17,8 @@ struct Settings
     float velocityTranslate = 0.2f;
 };
 
-class ConfigLoader {
+class ConfigLoader
+{
 public:
     /*
     Format of the config file is rough and unforgivable! Small deviations will fail!

@@ -24,16 +24,20 @@ int main(int argc, char* argv[]){
         wnd = std::make_shared<GLFWWindow>(settings.width, settings.height,
                                            "RayTracer",
                                            settings.fullscreen);
-        if (gl3wInit()) throw std::runtime_error("Could not initialize gl3w!");
-        if (!gl3wIsSupported(4, 3)) throw std::runtime_error("OpenGL 4.3 not supported!");
+        if (gl3wInit())
+            throw std::runtime_error("Could not initialize gl3w!");
+        if (!gl3wIsSupported(4, 3))
+            throw std::runtime_error("OpenGL 4.3 not supported!");
         std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << '\n';
         std::cout << "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << '\n';
-    } catch(std::exception& e){
+    } catch(std::exception& e) {
         std::cout << e.what() << std::endl;
         return -1;
     }
 
-    GLFWInput input;
+    GLFWInput inputControl;
+    inputControl.bindInputToWindow(*wnd);
+
     GLFWTimer timer;
     int maxFPS = settings.maxFPS;
     int width = settings.width;
@@ -52,10 +56,10 @@ int main(int argc, char* argv[]){
         auto tex = std::make_shared<Texture>(width, height, GL_RGBA8);
         auto texRenderer = std::make_shared<TextureRenderer>(width, height, tex, shManager);
         auto ort = std::make_shared<OpenGLRaytracer>(tex, *camera.get(), reflectionDepth, shManager);
-        auto inputControl = std::make_shared<GLFWInput>();
         auto scene = std::make_shared<Scene>();
         auto sceneReader = std::make_shared<SceneReader>();
         auto sceneLoader = std::make_shared<SceneLoader>(ort, shManager);
+
 
         for(int i = 1; i < argc; ++i){
             std::cout << "Loading Scene: " << argv[i] << std::endl;
@@ -72,7 +76,7 @@ int main(int argc, char* argv[]){
             if(timer.getTimeDiffWithoutActualization() > static_cast<double>(1.0)/static_cast<double>(maxFPS)){
                 timer.getTimeDiff();
 
-                inputControl->updateInput();
+                inputControl.updateInput();
                 camera->update();
 
                 ort->renderScene((*camera.get()), settings.width, settings.height, reflectionDepth);
@@ -81,7 +85,7 @@ int main(int argc, char* argv[]){
 
                 wnd->swapBuffers();
 
-                if(inputControl->isKeyPressed(GLFW_KEY_ESCAPE)){
+                if(inputControl.isKeyPressed(GLFW_KEY_ESCAPE)){
                     running = false;
                 }
                 frameCounter++;

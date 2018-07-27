@@ -10,21 +10,21 @@
 #include "Lights.h"
 #include "Primitives.h"
 
-class OpenGLRaytracer{
-private:
-
-    GLuint* _storageBufferIDs;
-    std::string _shaderProgName;
-    std::shared_ptr<Texture> _texture;
-    std::shared_ptr<ShaderManager> m_shManager;
-
-    void createComputeshader(Camera&,int);
-
+class OpenGLRaytracer
+{
 public:
-    OpenGLRaytracer(std::shared_ptr<Texture>&, Camera&, int reflectionDepth, std::shared_ptr<ShaderManager>& shManager);
+    OpenGLRaytracer(std::shared_ptr<Texture>& textureToRender, Camera&, int reflectionDepth, std::shared_ptr<ShaderManager>& shManager);
     ~OpenGLRaytracer();
 
-    void renderScene(Camera& , int , int, int);
+    void renderScene(Camera& camera, int width, int height, int reflectionDepth);
     std::string getCompShaderProgName();
     GLuint* getStorageBufferIDs();
+
+private:
+    void createComputeshader(Camera&,int);
+
+    GLuint* m_storageBufferIDs;
+    std::string m_shaderProgName;
+    std::shared_ptr<Texture> m_texture;
+    std::shared_ptr<ShaderManager> m_shManager;
 };

@@ -1,67 +1,57 @@
-#ifndef _GLFWWINDOW_
-#define _GLFWWINDOW_
-
-#ifndef _GLEW_
-#define _GLEW_
-    #include <GL/gl3w.h>
-    #include <GLFW/glfw3.h>
-#endif
+#pragma once
 
 #include <stdlib.h>
 #include <stdexcept>
 
-class GLFWWindow{
-private:
-    int				_width, _height;
-    int				_windowHandle;
-    std::string		_windowName;
-    bool			_windowed;
-    GLFWwindow*		_window;
+#include <GLFW/glfw3.h>
 
+class GLFWWindow
+{
 public:
-    GLFWWindow(int width, int height, const std::string& windowName, bool windowed) :
-        _width(width), _height(height), _windowName(windowName), _windowed(windowed) {
+    GLFWWindow(int width, int height, const std::string& windowName, bool fullscreen) :
+        m_width(width), m_height(height), m_windowName(windowName), m_fullscreen(fullscreen)
+    {
         initialize();
         setVSync(false);
     }
 
-    ~GLFWWindow(){
+    ~GLFWWindow()
+    {
         glfwTerminate();
     }
 
-    int getWidth(){
-        return _width;
-    }
+    int getWidth() const { return m_width; }
 
-    int getHeight(){
-        return _height;
-    }
+    int getHeight() const { return m_height; }
 
-    GLFWwindow* getGLFWwindow() const {
-        return _window;
+    GLFWwindow* getGLFWwindow() const
+    {
+        return m_window;
     }
 
     void swapBuffers(){
-        glfwSwapBuffers(_window);
+        glfwSwapBuffers(m_window);
     }
 
-    void setWindowTitle(const char *title){
-        glfwSetWindowTitle(_window, title);
+    void setWindowTitle(const char *title)
+    {
+        glfwSetWindowTitle(m_window, title);
     }
 
-    void setDefaultWindowTitle(){
-        glfwSetWindowTitle(_window, _windowName.c_str());
+    void setDefaultWindowTitle()
+    {
+        glfwSetWindowTitle(m_window, m_windowName.c_str());
     }
 
-    void setVSync(bool enable){
+    void setVSync(bool enable)
+    {
         glfwSwapInterval( enable?1:0);
     }
 
-
 private:
 
-    void initialize(){
-
+    void initialize()
+    {
         if(glfwInit() != GL_TRUE){
             throw std::runtime_error("Could not initialize GLFW!");
         }
@@ -69,22 +59,24 @@ private:
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-        _window = glfwCreateWindow(_width, _height, _windowName.c_str(), _windowed?NULL:glfwGetPrimaryMonitor(), NULL);
+        m_window = glfwCreateWindow(m_width, m_height, m_windowName.c_str(), m_fullscreen ? glfwGetPrimaryMonitor() : NULL, NULL);
 
-        if(!_window){
+        if(!m_window){
             glfwTerminate();
             throw std::runtime_error("Could not open GLFW Window!");
         }
 
-        setWindowTitle(_windowName.c_str());
+        setWindowTitle(m_windowName.c_str());
 
-        glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-        glfwMakeContextCurrent(_window);
+        glfwMakeContextCurrent(m_window);
     }
 
+    int	m_width;
+    int m_height;
+    int	m_windowHandle;
+    std::string	m_windowName;
+    bool m_fullscreen;
+    GLFWwindow*	m_window;
 };
-
-
-
-#endif

@@ -5,7 +5,8 @@
 #include "Primitives.h"
 #include "Lights.h"
 
-struct Scene{
+struct Scene
+{
     std::vector<glm::vec3> vertices;
     std::vector<std::pair<Triangle, int>> triangles;
     std::vector<std::pair<Sphere, int>> spheres;
@@ -24,7 +25,8 @@ struct Scene{
         return pointLights.size() + directionalLights.size();
     }
 
-    void clear() {
+    void clear()
+    {
         vertices.clear();
         triangles.clear();
         spheres.clear();

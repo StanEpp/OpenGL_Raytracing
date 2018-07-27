@@ -150,7 +150,8 @@ void objLoader::loadObjFile(const std::string& filepath, const std::string& file
     m_groupCache.clear();
 }
 
-bool objLoader::loadMTL(const std::string& filepath, const Warnings flags) {
+bool objLoader::loadMTL(const std::string& filepath, const Warnings flags)
+{
     std::ifstream file(filepath, std::ios::in);
 
     if (!file.is_open()) {
@@ -247,7 +248,8 @@ bool objLoader::loadMTL(const std::string& filepath, const Warnings flags) {
     return true;
 }
 
-size_t objLoader::addFace(objLoader::FaceDesc& face, size_t matIdx, size_t groupIdx) {
+size_t objLoader::addFace(objLoader::FaceDesc& face, size_t matIdx, size_t groupIdx)
+{
     Face newFace;
     newFace.face = face;
     newFace.material = matIdx;
@@ -261,7 +263,8 @@ size_t objLoader::addFace(objLoader::FaceDesc& face, size_t matIdx, size_t group
     return faceIdx;
 }
 
-size_t objLoader::addSphere(objLoader::Sphere& sphere, size_t matIdx, size_t groupIdx) {
+size_t objLoader::addSphere(objLoader::Sphere& sphere, size_t matIdx, size_t groupIdx)
+{
     sphere.material = matIdx;
     sphere.group = groupIdx;
 
@@ -273,7 +276,8 @@ size_t objLoader::addSphere(objLoader::Sphere& sphere, size_t matIdx, size_t gro
     return sphereIdx;
 }
 
-size_t objLoader::addPlane(objLoader::Plane& plane, size_t matIdx, size_t groupIdx) {
+size_t objLoader::addPlane(objLoader::Plane& plane, size_t matIdx, size_t groupIdx)
+{
     plane.material = matIdx;
     plane.group = groupIdx;
 
@@ -285,7 +289,8 @@ size_t objLoader::addPlane(objLoader::Plane& plane, size_t matIdx, size_t groupI
     return planeIdx;
 }
 
-size_t objLoader::addGroup(const std::string& name) {
+size_t objLoader::addGroup(const std::string& name)
+{
     //Check if group already exists. If not, create a new one.
     //If yes, use the already created group.
     auto it = m_groupCache.find(name);
@@ -301,7 +306,8 @@ size_t objLoader::addGroup(const std::string& name) {
     }
 }
 
-size_t objLoader::addMaterial(const std::string& name) {
+size_t objLoader::addMaterial(const std::string& name)
+{
     //Check if material already exists. If not, create a new one.
     //If yes, use the already created material.
     auto it = m_materialCache.find(name);
@@ -317,7 +323,8 @@ size_t objLoader::addMaterial(const std::string& name) {
     }
 }
 
-bool objLoader::parse_face(objLoader::FaceDesc& face) {
+bool objLoader::parse_face(objLoader::FaceDesc& face)
+{
     face = {{ {{ 0, 0, 0 }}, {{ 0, 0, 0 }}, {{ 0, 0, 0 }} }};
     auto f = [&face](int idx1, int idx2){ return [=, &face](auto& ctx){face[idx1][idx2] = _attr(ctx);};};
     auto success = phrase_parse(m_parsedLine.begin(), m_parsedLine.end(),
@@ -340,7 +347,8 @@ bool objLoader::parse_face(objLoader::FaceDesc& face) {
     return success;
 }
 
-bool objLoader::parse_sphere(objLoader::Sphere& sphere) {
+bool objLoader::parse_sphere(objLoader::Sphere& sphere)
+{
     auto sCenter = [&sphere](){ return [&](auto& ctx){ sphere.center = _attr(ctx); }; };
     auto sRadius = [&sphere](){ return [&](auto& ctx){ sphere.radius = _attr(ctx); }; };
     auto success = phrase_parse(m_parsedLine.begin(), m_parsedLine.end(),
@@ -352,7 +360,8 @@ bool objLoader::parse_sphere(objLoader::Sphere& sphere) {
     return success;
 }
 
-bool objLoader::parse_plane(objLoader::Plane& plane) {
+bool objLoader::parse_plane(objLoader::Plane& plane)
+{
     auto pOrigin = [&plane](){ return [&](auto& ctx){ plane.origin = _attr(ctx); }; };
     auto pNormal = [&plane](){ return [&](auto& ctx){ plane.normal = _attr(ctx); }; };
     auto success = phrase_parse(m_parsedLine.begin(), m_parsedLine.end(),
@@ -364,7 +373,8 @@ bool objLoader::parse_plane(objLoader::Plane& plane) {
     return success;
 }
 
-bool objLoader::parse_quad(objLoader::FaceDesc& face1, objLoader::FaceDesc& face2) {
+bool objLoader::parse_quad(objLoader::FaceDesc& face1, objLoader::FaceDesc& face2)
+{
     face1 = {{ {{ 0, 0, 0 }}, {{ 0, 0, 0 }}, {{ 0, 0, 0 }} }};
     face2 = {{ {{ 0, 0, 0 }}, {{ 0, 0, 0 }}, {{ 0, 0, 0 }} }};
 
@@ -407,7 +417,8 @@ bool objLoader::parse_quad(objLoader::FaceDesc& face1, objLoader::FaceDesc& face
 
 // Converts negative indices to positive indices and decrements positive values by -1.
 // If index is a 0 (which is an invalid value and signals that attribute is not existent) it will be converted to -1.
-void objLoader::convertFaceIndices(objLoader::FaceDesc& face) {
+void objLoader::convertFaceIndices(objLoader::FaceDesc& face)
+{
     for (size_t i = 0; i < 3; i++) {
         if (face[i][0] < 0) {
             face[i][0] += m_data.v.size();
@@ -436,7 +447,8 @@ void objLoader::convertFaceIndices(objLoader::FaceDesc& face) {
     }
 }
 
-void objLoader::checkForErrors(){
+void objLoader::checkForErrors()
+{
     for (auto it : m_data.materials){
         if (!it.loaded && !it.desc.name.empty()){
             std::cerr << "ERROR: Material \"" << it.desc.name << "\" is not found in \"" << m_data.mtllib << "\"!" << std::endl;
@@ -444,7 +456,8 @@ void objLoader::checkForErrors(){
     }
 }
 
-void objLoader::checkForWarnings(const Warnings flags){
+void objLoader::checkForWarnings(const Warnings flags)
+{
     if (flags &  Warnings::Unused_Material || flags == Warnings::All){
         for (auto it : m_data.materials){
             if (it.faces.empty()){
@@ -454,7 +467,8 @@ void objLoader::checkForWarnings(const Warnings flags){
     }
 }
 
-void objLoader::clearData(){
+void objLoader::clearData()
+{
     m_parsedLine.clear();
     m_data.clearData();
     m_groupCache.clear();
