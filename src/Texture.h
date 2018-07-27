@@ -6,19 +6,19 @@
 class Texture
 {
 public:
-    Texture(int width, int height, GLuint textureFormat);
+    Texture(unsigned int width, unsigned int height, GLuint textureFormat);
     ~Texture();
 
     GLuint getID();
     GLuint getFormat();
-    int getWidth();
-    int getHeight();
+    unsigned int getWidth();
+    unsigned int getHeight();
 
 private:
     void create();
 
-    int m_width;
-    int m_height;
+    unsigned int m_width;
+    unsigned int m_height;
     GLuint m_textureID;
     GLuint m_textureFormat;
 

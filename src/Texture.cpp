@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-Texture::Texture(int width, int height, GLuint textureFormat) :
+Texture::Texture(unsigned int width, unsigned int height, GLuint textureFormat) :
     m_width(width),
     m_height(height),
     m_textureFormat(textureFormat)
@@ -43,12 +43,12 @@ GLuint Texture::getID()
     return m_textureID;
 }
 
-int Texture::getWidth()
+unsigned int Texture::getWidth()
 {
     return m_width;
 }
 
-int Texture::getHeight()
+unsigned int Texture::getHeight()
 {
     return m_height;
 }

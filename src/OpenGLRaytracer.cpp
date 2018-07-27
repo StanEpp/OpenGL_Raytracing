@@ -1,7 +1,7 @@
 #include "OpenGLRaytracer.h"
 
 OpenGLRaytracer::OpenGLRaytracer(std::shared_ptr<Texture>& textureToRender, Camera& camera,
-                                 int reflectionDepth, std::shared_ptr<ShaderManager>& shManager) :
+                                 unsigned int reflectionDepth, std::shared_ptr<ShaderManager>& shManager) :
     m_texture(textureToRender),
     m_shManager(shManager)
 {
@@ -18,7 +18,7 @@ OpenGLRaytracer::~OpenGLRaytracer()
     delete m_storageBufferIDs;
 }
 
-void OpenGLRaytracer::createComputeshader(Camera& camera, int reflectionDepth)
+void OpenGLRaytracer::createComputeshader(Camera& camera, unsigned int reflectionDepth)
 {
     assert(glGetError() == GL_NO_ERROR);
 
@@ -49,7 +49,7 @@ void OpenGLRaytracer::createComputeshader(Camera& camera, int reflectionDepth)
 
 }
 
-void OpenGLRaytracer::renderScene(Camera& camera, int width, int height, int reflectionDepth)
+void OpenGLRaytracer::renderScene(Camera& camera, unsigned int width, unsigned int height, unsigned int reflectionDepth)
 {
     glUseProgram(m_shManager->getShaderProgramID(m_shaderProgName));
 

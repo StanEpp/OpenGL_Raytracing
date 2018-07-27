@@ -13,15 +13,15 @@
 class OpenGLRaytracer
 {
 public:
-    OpenGLRaytracer(std::shared_ptr<Texture>& textureToRender, Camera&, int reflectionDepth, std::shared_ptr<ShaderManager>& shManager);
+    OpenGLRaytracer(std::shared_ptr<Texture>& textureToRender, Camera&, unsigned int reflectionDepth, std::shared_ptr<ShaderManager>& shManager);
     ~OpenGLRaytracer();
 
-    void renderScene(Camera& camera, int width, int height, int reflectionDepth);
+    void renderScene(Camera& camera, unsigned int width, unsigned int height, unsigned int reflectionDepth);
     std::string getCompShaderProgName();
     GLuint* getStorageBufferIDs();
 
 private:
-    void createComputeshader(Camera&,int);
+    void createComputeshader(Camera& camera,unsigned int reflectionDepth);
 
     GLuint* m_storageBufferIDs;
     std::string m_shaderProgName;
