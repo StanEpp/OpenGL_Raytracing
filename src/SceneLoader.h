@@ -15,7 +15,7 @@ public:
     void loadScene(Scene&, OpenGLRaytracer&);
 
 private:
-    int m_numberOfObjInShader, m_numberOfMaterialsInShader, m_numberOfLightsInShader;
+    unsigned int m_numberOfObjInShader, m_numberOfMaterialsInShader, m_numberOfLightsInShader;
     int m_materialElements, m_objectElements, m_lightElements;
     int m_oBlockSize, m_oBlockIndex, m_mBlockSize, m_mBlockIndex, m_lBlockIndex, m_lBlockSize;
     int m_oAlignOffset, m_mAlignOffset, m_lAlignOffset;

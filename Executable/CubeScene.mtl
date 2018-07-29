@@ -1,0 +1,17 @@
+newmtl Material0
+Ka 0 0 0
+Kd 0.1 0.35 0.75
+Ks 0.7 0.7 0.7
+Ns 20
+
+newmtl Material1
+Ka 0 0 0
+Kd 0.1 0.2 0
+Ks 0.6 0.6 0.5
+Ns 200
+
+newmtl Material2
+Ka 0 0 0
+Kd 0 0.5 0.25
+Ks 1 0 0
+Ns 100

@@ -63,7 +63,7 @@ int main(int argc, char* argv[]){
 
         for(int i = 1; i < argc; ++i){
             std::cout << "Loading Scene: " << argv[i] << std::endl;
-            sceneReader->readScene((std::string(".\\")+std::string(argv[i])).c_str(), (*scene.get()));
+            sceneReader->readScene(std::string(argv[i]).c_str(), (*scene.get()));
             std::cout << "Reading Scene Complete" << std::endl;
             sceneLoader->loadScene(*scene.get(), *ort.get());
             std::cout << "Loading Scene Complete" << std::endl;

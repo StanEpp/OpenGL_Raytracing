@@ -1,0 +1,47 @@
+mtllib CubeScene.mtl
+
+v -2.5 0 2.5
+v -2.5 0 -2.5
+v 2.5 0 2.5
+v 2.5 0 -2.5
+v -2.5 5 2.5
+v -2.5 5 -2.5
+v 2.5 5 2.5
+v 2.5 5 -2.5
+v -7 2.5 0
+v 7 2.5 0
+v 0 2.5 7
+v 0 2.5 -7
+v 0 0.1 0
+
+vn 0 1 0
+
+usemtl Material2
+f 1 6 2
+f 5 7 1
+f 4 2 6
+f 4 6 8
+f 3 4 8
+f 8 7 3
+f 1 3 7
+f 7 5 1
+f 8 6 5
+f 5 7 8
+
+usemtl Material0
+sphere 9/1
+sphere 10/1
+sphere 11/1
+sphere 12/1
+
+plane 13/1
+
+pointLight 0/10/0 10/1/0 0/1/0.5
+pointLight 10/1/0 10/1/0 0/1/3
+pointLight -10/1/0 10/1/0 0/1/3
+pointLight 0/1/0 10/1/0 10/1/3
+pointLight 0/1/0 10/1/0 -10/1/3
+pointLight 9/0.1/0 1/0.1/0 0/0.1/20
+pointLight -9/0.1/0 1/0.1/0 0/0.1/20
+pointLight 0/0.1/0 1/0.1/0 9/0.1/20
+pointLight 0/0.1/0 1/0.1/0 -9/0.1/20

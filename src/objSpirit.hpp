@@ -104,6 +104,20 @@ class objLoader
         size_t group;
     };
 
+    struct PointLight
+    {
+        std::array<float, 3> center;
+        std::array<float, 3> color;
+        std::array<float, 3> attenuation;
+    };
+
+    struct DirectionalLight
+    {
+        std::array<float, 3> direction;
+        std::array<float, 3> color;
+        std::array<float, 3> attenuation;
+    };
+
 public:
 
     struct Data
@@ -111,11 +125,13 @@ public:
         std::vector<std::array<float, 3>> v;
         std::vector<std::array<float, 2>> vt;
         std::vector<std::array<float, 3>> vn;
-        std::vector<Face>     faces;
-        std::vector<Sphere>   spheres;
-        std::vector<Plane>    planes;
-        std::vector<Material> materials;
-        std::vector<Group>    groups;
+        std::vector<Face>             faces;
+        std::vector<Sphere>           spheres;
+        std::vector<Plane>            planes;
+        std::vector<Material>         materials;
+        std::vector<Group>            groups;
+        std::vector<PointLight>       pointLights;
+        std::vector<DirectionalLight> directionalLights;
         std::string mtllib;
 
         void clearData() {
@@ -135,7 +151,7 @@ public:
     objLoader(objLoader&) = delete;
     objLoader& operator=(objLoader& rhs) = delete;
 
-    void loadObjFile(const std::string& filepath, const std::string& filename, const Warnings flags = Warnings::No);
+    void loadObjFile(const std::string& filename, const Warnings flags = Warnings::No);
 
     Data&& getData() { return std::move(m_data); }
 
@@ -149,14 +165,20 @@ private:
     bool parse_quad(FaceDesc&, FaceDesc&);
     bool parse_sphere(Sphere&);
     bool parse_plane(Plane&);
+    bool parse_pointLight(PointLight&);
+    bool parse_dirLight(DirectionalLight&);
 
     size_t addFace(FaceDesc&, size_t, size_t);
     size_t addSphere(Sphere&, size_t, size_t);
     size_t addPlane(Plane&, size_t, size_t);
+    size_t addPointLight(PointLight&);
+    size_t addDirLight(DirectionalLight&);
     size_t addGroup(const std::string&);
     size_t addMaterial(const std::string&);
 
-    void convertFaceIndices(FaceDesc& face);
+    void convertIndices(FaceDesc& face);
+    void convertIndices(Sphere& sphere);
+    void convertIndices(Plane& plane);
 
     void checkForErrors();
 

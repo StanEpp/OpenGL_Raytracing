@@ -1,0 +1,11 @@
+newmtl Mirror
+Ka 0 0 0
+Kd 0.1 0.5 0.1
+Ks 0 0.7 0.7
+Ns 100
+
+newmtl Sphere
+Ka 0 0 0
+Kd 0 0.5 0.25
+Ks 1 0 0
+Ns 100

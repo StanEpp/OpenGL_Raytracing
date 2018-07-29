@@ -177,7 +177,7 @@ void SceneLoader::loadScene(Scene& scene, OpenGLRaytracer& ogl)
         }
 
         for(const auto &dl : scene.directionalLights){
-            memcpy(ptr + m_numberOfLightsInShader*m_lAlignOffset + m_lOffsets[0], &(dl.position) , sizeof(glm::vec4));
+            memcpy(ptr + m_numberOfLightsInShader*m_lAlignOffset + m_lOffsets[0], &(dl.direction) , sizeof(glm::vec4));
             memcpy(ptr + m_numberOfLightsInShader*m_lAlignOffset + m_lOffsets[1], &(dl.color) , sizeof(glm::vec4));
             memcpy(ptr + m_numberOfLightsInShader*m_lAlignOffset + m_lOffsets[2], &(dl.attenuation) , sizeof(glm::vec4));
             m_numberOfLightsInShader++;

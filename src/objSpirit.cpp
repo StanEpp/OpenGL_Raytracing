@@ -41,12 +41,12 @@ auto& trimString(std::string &str)
     return str;
 }
 
-void objLoader::loadObjFile(const std::string& filepath, const std::string& filename, const Warnings flags)
+void objLoader::loadObjFile(const std::string& filepath, const Warnings flags)
 {
-    std::ifstream file(filepath + "\\" + filename, std::ios::in);
+    std::ifstream file(filepath, std::ios::in);
 
     if (!file.is_open()){
-        std::cerr << "ERROR: Could not open file \"" << filepath << "\\" << filename << "\"" << std::endl;
+        std::cerr << "ERROR: Could not open file \"" << filepath << "\"" << std::endl;
         return;
     }
 
@@ -60,6 +60,8 @@ void objLoader::loadObjFile(const std::string& filepath, const std::string& file
     objLoader::FaceDesc face, face2;
     objLoader::Sphere sphere;
     objLoader::Plane plane;
+    objLoader::PointLight pointLight;
+    objLoader::DirectionalLight dirLight;
     std::vector<float> vec;
     vec.reserve(3);
     std::string mat, tempStr;
@@ -117,6 +119,12 @@ void objLoader::loadObjFile(const std::string& filepath, const std::string& file
             checkMaterialAndGroup();
             addPlane(plane, currMatIdx, currGroupIdx);
         }
+        else if (parse_pointLight(pointLight)) {
+            addPointLight(pointLight);
+        }
+        else if (parse_dirLight(dirLight)) {
+            addDirLight(dirLight);
+        }
         else if (phrase_parse(itBegin, itEnd, "g " >> r_readString, space, tempStr)) {
             currGroupIdx = addGroup(trimString(tempStr));
             usedGroup = true;
@@ -130,7 +138,7 @@ void objLoader::loadObjFile(const std::string& filepath, const std::string& file
             usedMaterial = true;
         }
         else if (phrase_parse(itBegin, itEnd, "mtllib " >> r_readString, space, tempStr)) {
-            if (!loadMTL(filepath + "\\" + trimString(tempStr), flags)) {
+            if (!loadMTL(trimString(tempStr), flags)) {
                 std::cerr << "ERROR: Error while loading Material library \""<< m_data.mtllib << "\"!" << std::endl;
                 return;
             }
@@ -289,6 +297,18 @@ size_t objLoader::addPlane(objLoader::Plane& plane, size_t matIdx, size_t groupI
     return planeIdx;
 }
 
+size_t objLoader::addPointLight(PointLight& p)
+{
+    m_data.pointLights.push_back(p);
+    return m_data.pointLights.size() - 1;
+}
+
+size_t objLoader::addDirLight(DirectionalLight& d)
+{
+    m_data.directionalLights.push_back(d);
+    return m_data.directionalLights.size() - 1;
+}
+
 size_t objLoader::addGroup(const std::string& name)
 {
     //Check if group already exists. If not, create a new one.
@@ -342,7 +362,7 @@ bool objLoader::parse_face(objLoader::FaceDesc& face)
     ),
     space);
 
-    if (success) convertFaceIndices(face);
+    if (success) convertIndices(face);
 
     return success;
 }
@@ -353,9 +373,12 @@ bool objLoader::parse_sphere(objLoader::Sphere& sphere)
     auto sRadius = [&sphere](){ return [&](auto& ctx){ sphere.radius = _attr(ctx); }; };
     auto success = phrase_parse(m_parsedLine.begin(), m_parsedLine.end(),
     (
-        "sphere " >> int_[sCenter()] >> float_[sRadius()] >> eoi
+        "sphere " >> int_[sCenter()] >> '/' >> float_[sRadius()] >> eoi
     ),
     space);
+
+    if (success)
+        convertIndices(sphere);
 
     return success;
 }
@@ -366,7 +389,42 @@ bool objLoader::parse_plane(objLoader::Plane& plane)
     auto pNormal = [&plane](){ return [&](auto& ctx){ plane.normal = _attr(ctx); }; };
     auto success = phrase_parse(m_parsedLine.begin(), m_parsedLine.end(),
     (
-        "plane " >> int_[pOrigin()] >> int_[pNormal()] >> eoi
+        "plane " >> int_[pOrigin()] >> '/' >> int_[pNormal()] >> eoi
+    ),
+    space);
+
+    if(success)
+        convertIndices(plane);
+
+    return success;
+}
+
+bool objLoader::parse_pointLight(objLoader::PointLight& p)
+{
+    auto center = [&p](int idx1){ return [=, &p](auto& ctx){ p.center[idx1] = _attr(ctx); };};
+    auto color = [&p](int idx1){ return [=, &p](auto& ctx){ p.color[idx1] = _attr(ctx);} ;};
+    auto att = [&p](int idx1){ return [=, &p](auto& ctx){ p.attenuation[idx1] = _attr(ctx);} ;};
+    auto success = phrase_parse(m_parsedLine.begin(), m_parsedLine.end(),
+    (
+        "pointLight " >> float_[center(0)] >> '/'  >> float_[color(0)] >> '/' >> float_[att(0)] >>
+                         float_[center(1)] >> '/'  >> float_[color(1)] >> '/' >> float_[att(1)] >>
+                         float_[center(2)] >> '/'  >> float_[color(2)] >> '/' >> float_[att(2)] >> eoi
+    ),
+    space);
+
+    return success;
+}
+
+bool objLoader::parse_dirLight(objLoader::DirectionalLight& d)
+{
+    auto dir = [&d](int idx1){ return [=, &d](auto& ctx){ d.direction[idx1] = _attr(ctx); };};
+    auto color = [&d](int idx1){ return [=, &d](auto& ctx){ d.color[idx1] = _attr(ctx);} ;};
+    auto att = [&d](int idx1){ return [=, &d](auto& ctx){ d.attenuation[idx1] = _attr(ctx);} ;};
+    auto success = phrase_parse(m_parsedLine.begin(), m_parsedLine.end(),
+    (
+        "directionalLight " >> float_[dir(0)] >> '/'  >> float_[color(0)] >> '/' >> float_[att(0)] >>
+                               float_[dir(1)] >> '/'  >> float_[color(1)] >> '/' >> float_[att(1)] >>
+                               float_[dir(2)] >> '/'  >> float_[color(2)] >> '/' >> float_[att(2)] >> eoi
     ),
     space);
 
@@ -408,8 +466,8 @@ bool objLoader::parse_quad(objLoader::FaceDesc& face1, objLoader::FaceDesc& face
         face2[1] = quad[3];
         face2[2] = quad[0];
 
-        convertFaceIndices(face1);
-        convertFaceIndices(face2);
+        convertIndices(face1);
+        convertIndices(face2);
     }
 
     return success;
@@ -417,33 +475,54 @@ bool objLoader::parse_quad(objLoader::FaceDesc& face1, objLoader::FaceDesc& face
 
 // Converts negative indices to positive indices and decrements positive values by -1.
 // If index is a 0 (which is an invalid value and signals that attribute is not existent) it will be converted to -1.
-void objLoader::convertFaceIndices(objLoader::FaceDesc& face)
+void objLoader::convertIndices(objLoader::FaceDesc& face)
 {
-    for (size_t i = 0; i < 3; i++) {
+    for (size_t i = 0; i < 3; ++i) {
         if (face[i][0] < 0) {
             face[i][0] += m_data.v.size();
-        }
-        else {
+        } else {
             face[i][0]--;
         }
     }
 
-    for (size_t i = 0; i < 3; i++) {
+    for (size_t i = 0; i < 3; ++i) {
         if (face[i][1] < 0) {
             face[i][1] += m_data.vt.size();
-        }
-        else {
+        } else {
             face[i][1]--;
         }
     }
 
-    for (size_t i = 0; i < 3; i++) {
+    for (size_t i = 0; i < 3; ++i) {
         if (face[i][2] < 0) {
             face[i][2] += m_data.vn.size();
-        }
-        else {
+        } else {
             face[i][2]--;
         }
+    }
+}
+
+void objLoader::convertIndices(objLoader::Sphere& sphere)
+{
+    if (sphere.center < 0) {
+        sphere.center += m_data.v.size();
+    } else {
+        sphere.center--;
+    }
+}
+
+void objLoader::convertIndices(objLoader::Plane& plane)
+{
+    if (plane.normal < 0) {
+        plane.normal += m_data.v.size();
+    } else {
+        plane.normal--;
+    }
+
+    if (plane.origin < 0) {
+        plane.origin += m_data.vt.size();
+    } else {
+        plane.origin--;
     }
 }
 
@@ -458,9 +537,9 @@ void objLoader::checkForErrors()
 
 void objLoader::checkForWarnings(const Warnings flags)
 {
-    if (flags &  Warnings::Unused_Material || flags == Warnings::All){
+    if (flags & Warnings::Unused_Material || flags == Warnings::All){
         for (auto it : m_data.materials){
-            if (it.faces.empty()){
+            if (it.faces.empty() && it.spheres.empty() && it.planes.empty()){
                 std::cerr << "Warning: Material \"" << it.desc.name << "\" is not used!" << std::endl;
             }
         }
