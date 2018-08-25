@@ -30,7 +30,7 @@ void OpenGLRaytracer::createComputeshader(Camera& camera, unsigned int reflectio
         throw std::runtime_error("ERROR: Could not bind image texture!");
     }
 
-    m_shManager->loadShader("cs.glsl", "computeShader", GL_COMPUTE_SHADER);
+    m_shManager->loadShader("shader/cs.glsl", "computeShader", GL_COMPUTE_SHADER);
     m_shManager->createProgram(m_shaderProgName);
     m_shManager->attachShader("computeShader", m_shaderProgName);
     m_shManager->linkProgram(m_shaderProgName);

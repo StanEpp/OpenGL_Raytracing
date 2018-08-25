@@ -40,6 +40,29 @@ set(HEADER_FILES
     src/objSpirit.hpp
 )
 
+set(SHADER_FILES
+    shader/vs.glsl
+    shader/fs.glsl
+    shader/cs.glsl
+)
+
+set(EXAMPLE_FILES
+    scenes/CubeScene.mtl
+    scenes/CubeScene.obj
+    scenes/MirrorRoom.mtl
+    scenes/MirrorRoom.obj
+)
+
+foreach(SHADER ${SHADER_FILES})
+configure_file(${SHADER} ${SHADER} COPYONLY)
+endforeach()
+
+foreach(EXAMPLE ${EXAMPLE_FILES})
+configure_file(${EXAMPLE} ${EXAMPLE} COPYONLY)
+endforeach()
+
+configure_file(settings.txt settings.txt COPYONLY)
+
 add_executable(OpenGL_Raytracer ${SOURCE_FILES} ${HEADER_FILES})
 add_dependencies(OpenGL_Raytracer glfw_ext glm_ext)
 target_link_libraries(OpenGL_Raytracer PUBLIC glfw dl)

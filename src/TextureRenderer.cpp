@@ -34,8 +34,8 @@ void TextureRenderer::initialize()
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexUVBufferID);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
 
-    m_shManager->loadShader("vs.glsl", "vertexShader", GL_VERTEX_SHADER);
-    m_shManager->loadShader("fs.glsl", "fragmentShader", GL_FRAGMENT_SHADER);
+    m_shManager->loadShader("shader/vs.glsl", "vertexShader", GL_VERTEX_SHADER);
+    m_shManager->loadShader("shader/fs.glsl", "fragmentShader", GL_FRAGMENT_SHADER);
 
     m_shManager->createProgram(m_shaderProgName);
 

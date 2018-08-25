@@ -5,4 +5,4 @@ reflectionDepth 5
 maxFPS 60
 width 1024
 height 768
-fullscreen 1
+fullscreen 0
