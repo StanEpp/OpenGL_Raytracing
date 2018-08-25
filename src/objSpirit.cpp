@@ -1,5 +1,6 @@
 #include "objSpirit.hpp"
 #include <boost/spirit/home/x3.hpp>
+#include <boost/filesystem.hpp>
 
 using namespace objSpirit;
 
@@ -67,6 +68,7 @@ void objLoader::loadObjFile(const std::string& filepath, const Warnings flags)
     std::string mat, tempStr;
     size_t currMatIdx = 0, currGroupIdx = 0;
     bool usedMaterial = false, usedGroup = false;
+    boost::filesystem::path objFilePath = boost::filesystem::canonical(filepath);
 
     auto checkMaterialAndGroup = [&]() {
         if (!usedMaterial) {
@@ -138,8 +140,9 @@ void objLoader::loadObjFile(const std::string& filepath, const Warnings flags)
             usedMaterial = true;
         }
         else if (phrase_parse(itBegin, itEnd, "mtllib " >> r_readString, space, tempStr)) {
-            if (!loadMTL(trimString(tempStr), flags)) {
-                std::cerr << "ERROR: Error while loading Material library \""<< m_data.mtllib << "\"!" << std::endl;
+            auto mtlPath = objFilePath.parent_path() / tempStr;
+            if (!loadMTL(mtlPath.string(), flags)) {
+                std::cerr << "ERROR: Error while loading Material library \""<< mtlPath.string() << "\"!" << std::endl;
                 return;
             }
         }

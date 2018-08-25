@@ -65,5 +65,5 @@ configure_file(settings.txt settings.txt COPYONLY)
 
 add_executable(OpenGL_Raytracer ${SOURCE_FILES} ${HEADER_FILES})
 add_dependencies(OpenGL_Raytracer glfw_ext glm_ext)
-target_link_libraries(OpenGL_Raytracer PUBLIC glfw dl)
+target_link_libraries(OpenGL_Raytracer PUBLIC glfw dl boost_filesystem boost_system)
 
