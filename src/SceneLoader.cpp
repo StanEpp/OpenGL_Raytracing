@@ -72,26 +72,26 @@ void SceneLoader::initialize(const std::shared_ptr<OpenGLRaytracer> &raytracer)
     glGenBuffers(3, raytracer->getStorageBufferIDs());
 }
 
-void SceneLoader::loadScene(Scene& scene, OpenGLRaytracer& ogl)
+void SceneLoader::loadScene(const std::shared_ptr<Scene> &scene, const std::shared_ptr<OpenGLRaytracer> &raytracer)
 {
     ////////////////////////////////////////////////////// LOADING OBJECTS //////////////////////////////////////////////////////
     void* p = malloc(m_numberOfObjInShader*m_oAlignOffset);
 
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ogl.getStorageBufferIDs()[0]);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, raytracer->getStorageBufferIDs()[0]);
     glGetBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, m_numberOfObjInShader*m_oAlignOffset, (void *)(p));
 
     if(m_numberOfObjInShader*m_oAlignOffset == 0){
-        glBufferData(GL_SHADER_STORAGE_BUFFER, (m_numberOfObjInShader+scene.numberOfObjects())*m_oAlignOffset, NULL, GL_DYNAMIC_DRAW);
+        glBufferData(GL_SHADER_STORAGE_BUFFER, (m_numberOfObjInShader+scene->numberOfObjects())*m_oAlignOffset, NULL, GL_DYNAMIC_DRAW);
     } else {
-        glBufferData(GL_SHADER_STORAGE_BUFFER, (m_numberOfObjInShader+scene.numberOfObjects())*m_oAlignOffset, p, GL_DYNAMIC_DRAW);
+        glBufferData(GL_SHADER_STORAGE_BUFFER, (m_numberOfObjInShader+scene->numberOfObjects())*m_oAlignOffset, p, GL_DYNAMIC_DRAW);
         free(p);
     }
 
-    if(scene.numberOfObjects() != 0){
+    if(scene->numberOfObjects() != 0){
         GLubyte* ptr = (GLubyte*)glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY);
 
         int type = 3;
-        for(const auto &tr : scene.triangles){
+        for(const auto &tr : scene->triangles){
             memcpy(ptr + m_numberOfObjInShader*m_oAlignOffset + m_oOffsets[0], &(tr.first.A) , sizeof(glm::vec4));
             memcpy(ptr + m_numberOfObjInShader*m_oAlignOffset + m_oOffsets[1], &(tr.first.B) , sizeof(glm::vec4));
             memcpy(ptr + m_numberOfObjInShader*m_oAlignOffset + m_oOffsets[2], &(tr.first.C) , sizeof(glm::vec4));
@@ -101,7 +101,7 @@ void SceneLoader::loadScene(Scene& scene, OpenGLRaytracer& ogl)
         }
 
         type = 1;
-        for(const auto &sp : scene.spheres){
+        for(const auto &sp : scene->spheres){
             const auto sphere = glm::vec4(sp.first.center, sp.first.radius);
 
             memcpy(ptr + m_numberOfObjInShader*m_oAlignOffset + m_oOffsets[0], &sphere , sizeof(glm::vec4));
@@ -111,7 +111,7 @@ void SceneLoader::loadScene(Scene& scene, OpenGLRaytracer& ogl)
         }
 
         type = 2;
-        for(const auto &pl : scene.planes){
+        for(const auto &pl : scene->planes){
             memcpy(ptr + m_numberOfObjInShader*m_oAlignOffset + m_oOffsets[0], &(pl.first.pos) , sizeof(glm::vec4));
             memcpy(ptr + m_numberOfObjInShader*m_oAlignOffset + m_oOffsets[1], &(pl.first.normal), sizeof(glm::vec4));
             memcpy(ptr + m_numberOfObjInShader*m_oAlignOffset + m_oOffsets[3], &type , sizeof(int));
@@ -120,7 +120,7 @@ void SceneLoader::loadScene(Scene& scene, OpenGLRaytracer& ogl)
         }
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-        glShaderStorageBlockBinding(m_shManager->getShaderProgramID(ogl.getCompShaderProgName()), m_oBlockIndex, 0);
+        glShaderStorageBlockBinding(m_shManager->getShaderProgramID(raytracer->getCompShaderProgName()), m_oBlockIndex, 0);
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
     }
 
@@ -128,19 +128,19 @@ void SceneLoader::loadScene(Scene& scene, OpenGLRaytracer& ogl)
 
     p = malloc(m_numberOfMaterialsInShader*m_mAlignOffset);
 
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, ogl.getStorageBufferIDs()[1]);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, raytracer->getStorageBufferIDs()[1]);
     glGetBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, m_numberOfMaterialsInShader*m_mAlignOffset, p);
     if(m_numberOfMaterialsInShader*m_mAlignOffset == 0){
-        glBufferData(GL_SHADER_STORAGE_BUFFER, (m_numberOfMaterialsInShader + scene.materials.size()) * m_mAlignOffset, NULL, GL_STATIC_DRAW);
+        glBufferData(GL_SHADER_STORAGE_BUFFER, (m_numberOfMaterialsInShader + scene->materials.size()) * m_mAlignOffset, NULL, GL_STATIC_DRAW);
     } else {
-        glBufferData(GL_SHADER_STORAGE_BUFFER, (m_numberOfMaterialsInShader + scene.materials.size()) * m_mAlignOffset, p, GL_STATIC_DRAW);
+        glBufferData(GL_SHADER_STORAGE_BUFFER, (m_numberOfMaterialsInShader + scene->materials.size()) * m_mAlignOffset, p, GL_STATIC_DRAW);
         free(p);
     }
 
-    if(scene.materials.size() != 0){
+    if(scene->materials.size() != 0){
         GLubyte* ptr = (GLubyte*)glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY);
 
-        for(const auto &mt : scene.materials){
+        for(const auto &mt : scene->materials){
             memcpy(ptr + m_numberOfMaterialsInShader*m_mAlignOffset + m_mOffsets[0], &(mt.diffuse) , sizeof(glm::vec4));
             memcpy(ptr + m_numberOfMaterialsInShader*m_mAlignOffset + m_mOffsets[1], &(mt.specularity) , sizeof(glm::vec4));
             memcpy(ptr + m_numberOfMaterialsInShader*m_mAlignOffset + m_mOffsets[2], &(mt.emission) , sizeof(glm::vec4));
@@ -149,7 +149,7 @@ void SceneLoader::loadScene(Scene& scene, OpenGLRaytracer& ogl)
         }
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-        glShaderStorageBlockBinding(m_shManager->getShaderProgramID(ogl.getCompShaderProgName()), m_mBlockIndex, 1);
+        glShaderStorageBlockBinding(m_shManager->getShaderProgramID(raytracer->getCompShaderProgName()), m_mBlockIndex, 1);
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
     }
 
@@ -157,26 +157,26 @@ void SceneLoader::loadScene(Scene& scene, OpenGLRaytracer& ogl)
     ////////////////////////////////////////////////////// LOADING LIGHTS //////////////////////////////////////////////////////
     p = malloc(m_numberOfLightsInShader*m_lAlignOffset);
 
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, ogl.getStorageBufferIDs()[2]);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, raytracer->getStorageBufferIDs()[2]);
     glGetBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, m_numberOfLightsInShader*m_lAlignOffset, p);
     if (m_numberOfLightsInShader*m_lAlignOffset == 0){
-        glBufferData(GL_SHADER_STORAGE_BUFFER, scene.numberOfLights() * m_lAlignOffset, NULL, GL_STATIC_DRAW);
+        glBufferData(GL_SHADER_STORAGE_BUFFER, scene->numberOfLights() * m_lAlignOffset, NULL, GL_STATIC_DRAW);
     } else {
-        glBufferData(GL_SHADER_STORAGE_BUFFER, (m_numberOfLightsInShader + scene.numberOfLights()) * m_lAlignOffset, p, GL_STATIC_DRAW);
+        glBufferData(GL_SHADER_STORAGE_BUFFER, (m_numberOfLightsInShader + scene->numberOfLights()) * m_lAlignOffset, p, GL_STATIC_DRAW);
         free(p);
     }
 
-    if (scene.numberOfLights() != 0){
+    if (scene->numberOfLights() != 0){
         GLubyte* ptr = (GLubyte*)glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY);
 
-        for(const auto &pl : scene.pointLights){
+        for(const auto &pl : scene->pointLights){
             memcpy(ptr + m_numberOfLightsInShader*m_lAlignOffset + m_lOffsets[0], &(pl.position) , sizeof(glm::vec4));
             memcpy(ptr + m_numberOfLightsInShader*m_lAlignOffset + m_lOffsets[1], &(pl.color) , sizeof(glm::vec4));
             memcpy(ptr + m_numberOfLightsInShader*m_lAlignOffset + m_lOffsets[2], &(pl.attenuation) , sizeof(glm::vec4));
             m_numberOfLightsInShader++;
         }
 
-        for(const auto &dl : scene.directionalLights){
+        for(const auto &dl : scene->directionalLights){
             memcpy(ptr + m_numberOfLightsInShader*m_lAlignOffset + m_lOffsets[0], &(dl.direction) , sizeof(glm::vec4));
             memcpy(ptr + m_numberOfLightsInShader*m_lAlignOffset + m_lOffsets[1], &(dl.color) , sizeof(glm::vec4));
             memcpy(ptr + m_numberOfLightsInShader*m_lAlignOffset + m_lOffsets[2], &(dl.attenuation) , sizeof(glm::vec4));
@@ -184,10 +184,10 @@ void SceneLoader::loadScene(Scene& scene, OpenGLRaytracer& ogl)
         }
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-        glShaderStorageBlockBinding(m_shManager->getShaderProgramID(ogl.getCompShaderProgName()), m_lBlockIndex, 2);
+        glShaderStorageBlockBinding(m_shManager->getShaderProgramID(raytracer->getCompShaderProgName()), m_lBlockIndex, 2);
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
     }
 
-    m_shManager->loadUniform_(ogl.getCompShaderProgName(), std::string("numObj"), m_numberOfObjInShader);
-    m_shManager->loadUniform_(ogl.getCompShaderProgName(), std::string("numLights"), m_numberOfLightsInShader);
+    m_shManager->loadUniform_(raytracer->getCompShaderProgName(), std::string("numObj"), m_numberOfObjInShader);
+    m_shManager->loadUniform_(raytracer->getCompShaderProgName(), std::string("numLights"), m_numberOfLightsInShader);
 }

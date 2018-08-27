@@ -1,69 +1,74 @@
 #pragma once
 
+#include "GLFWInput.hpp"
+
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include <glm/glm.hpp>
-#include <cmath>
+#include <glm/gtx/rotate_vector.hpp>
 
 class Camera
 {
 public:
 
-    Camera(int width, int height, float fovY, glm::vec3 pos, glm::vec3 lookAt, glm::vec3 up) :
-        m_width(width),
+    Camera(int width, int height, float fovY, float sensitivity,
+           glm::vec3 pos, glm::vec3 lookAt, glm::vec3 up)
+    :   m_width(width),
         m_height(height),
+        m_sensitivity(sensitivity),
         m_pos(pos)
     {
-        m_dir = glm::normalize(lookAt-pos);
-        m_xAxis = glm::normalize(glm::cross(up, m_dir));
-        m_yAxis = glm::cross(-m_dir, m_xAxis);
+        m_lookDir = glm::normalize(lookAt - pos);
+        m_right = glm::normalize(glm::cross(up, m_lookDir));
+        m_up = glm::cross(m_lookDir, m_right);
 
-        m_tanFovY = std::tan(fovY * std::acos(-1) / 180.f / 2.0f);
-        m_tanFovX = (static_cast<float>(m_width)*m_tanFovY)/static_cast<float>(m_height);
+        m_fovY = std::tan(fovY * std::acos(-1) / 180.f / 2.0f);
+        m_fovX = (static_cast<float>(m_width)*m_fovY)/static_cast<float>(m_height);
     }
 
-    int getWidth() const{ return m_width; }
-    int getHeight() const { return m_height; }
-    float getTanFovY() const{ return m_tanFovY; }
-    float getTanFovX() const { return m_tanFovX; }
-    glm::vec3 getPos() const { return m_pos; }
-    glm::vec3 getDir() const { return m_dir; }
-    glm::vec3 getXAxis() const { return m_xAxis; }
-    glm::vec3 getYAxis() const { return m_yAxis; }
+    int width() const{ return m_width; }
+    int height() const { return m_height; }
+    float fovY() const{ return m_fovY; }
+    float fovX() const { return m_fovX; }
+    glm::vec3 pos() const { return m_pos; }
+    glm::vec3 lookDir() const { return m_lookDir; }
+    glm::vec3 up() const { return m_up; }
+    glm::vec3 right() const { return m_right; }
 
-    void setTransformTranslate(glm::mat4 transf)
+    void update(const GLFWInput &input, float dt)
     {
-        m_transfT = transf;
-    }
+        float dz, dx, dy, dyRot, dxRot, dzRot;
+        dz = dx = dy = dyRot = dxRot = dzRot = 0.f;
 
-    void setTransformRotate(glm::mat4 transf)
-    {
-        m_transfR = transf;
-    }
+        if (input.isKeyPressed(GLFW_KEY_W)) {
+            dz = m_sensitivity * dt;
+        } else if (input.isKeyPressed(GLFW_KEY_S)) {
+            dz = -1.f * m_sensitivity * dt;
+        }
 
-    void update()
-    {
-        glm::vec4 temp = m_transfT*glm::vec4(m_pos, 1);
-        m_pos = glm::vec3(temp.x, temp.y, temp.z);
+        if (input.isKeyPressed(GLFW_KEY_D)) {
+            dx = m_sensitivity * dt;
+        } else if (input.isKeyPressed(GLFW_KEY_A)) {
+            dx = -1.f * m_sensitivity * dt;
+        }
 
-        temp = m_transfR*glm::vec4(m_dir, 0);
-        m_dir = glm::vec3(temp.x, temp.y, temp.z);
-
-        temp = m_transfR*glm::vec4(m_xAxis, 0);
-        m_xAxis = glm::vec3(temp.x, temp.y, temp.z);
-
-        temp = m_transfR*glm::vec4(m_yAxis, 0);
-        m_yAxis = glm::vec3(temp.x, temp.y, temp.z);
+        dyRot = -1.f * input.getXPosDiff() * m_sensitivity * dt;
+        dxRot = -1.f * input.getYPosDiff() * m_sensitivity * dt;
+        std::cout << "dyRot " << dyRot << " dxRot " << dxRot << std::endl;
+        m_pos += dz * m_lookDir + dx * m_right;
+        m_right = glm::normalize(glm::rotate(m_right, dyRot, m_up));
+        m_up = glm::normalize(glm::rotate(m_up, dxRot, m_right));
+        m_lookDir = glm::normalize(glm::cross(m_right, m_up));
     }
 
 private:
     int	m_width;
     int m_height;
-    float m_tanFovY;
-    int m_tanFovX;
-
+    float m_fovY;
+    float m_fovX;
+    float m_sensitivity;
     glm::vec3 m_pos;
-    glm::vec3 m_dir;
-    glm::vec3 m_xAxis;
-    glm::vec3 m_yAxis;
-    glm::mat4 m_transfT;
-    glm::mat4 m_transfR;
+    glm::vec3 m_lookDir;
+    glm::vec3 m_up;
+    glm::vec3 m_right;
 };

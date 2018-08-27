@@ -37,12 +37,12 @@ void OpenGLRaytracer::createComputeshader(Camera& camera, unsigned int reflectio
     m_shManager->deleteShader("computeShader");
     m_shManager->useProgram(m_shaderProgName);
 
-    m_shManager->loadUniform_(m_shaderProgName, "camera.pos", camera.getPos().x, camera.getPos().y, camera.getPos().z, 0.f);
-    m_shManager->loadUniform_(m_shaderProgName, "camera.dir", camera.getDir().x, camera.getDir().y, camera.getDir().z, 0.f);
-    m_shManager->loadUniform_(m_shaderProgName, "camera.yAxis", camera.getYAxis().x, camera.getYAxis().y, camera.getYAxis().z, 0.f);
-    m_shManager->loadUniform_(m_shaderProgName, "camera.xAxis", camera.getXAxis().x, camera.getXAxis().y, camera.getXAxis().z, 0.f);
-    m_shManager->loadUniform_(m_shaderProgName, "camera.tanFovX", camera.getTanFovX());
-    m_shManager->loadUniform_(m_shaderProgName, "camera.tanFovY", camera.getTanFovY());
+    m_shManager->loadUniform_(m_shaderProgName, "camera.pos", camera.pos().x, camera.pos().y, camera.pos().z, 0.f);
+    m_shManager->loadUniform_(m_shaderProgName, "camera.dir", camera.lookDir().x, camera.lookDir().y, camera.lookDir().z, 0.f);
+    m_shManager->loadUniform_(m_shaderProgName, "camera.yAxis", camera.up().x, camera.up().y, camera.up().z, 0.f);
+    m_shManager->loadUniform_(m_shaderProgName, "camera.xAxis", camera.right().x, camera.right().y, camera.right().z, 0.f);
+    m_shManager->loadUniform_(m_shaderProgName, "camera.tanFovX", camera.fovX());
+    m_shManager->loadUniform_(m_shaderProgName, "camera.tanFovY", camera.fovY());
     m_shManager->loadUniform_(m_shaderProgName, "width", m_texture->getWidth());
     m_shManager->loadUniform_(m_shaderProgName, "height", m_texture->getHeight());
     m_shManager->loadUniform_(m_shaderProgName, "reflectionDepth", reflectionDepth);
@@ -53,10 +53,10 @@ void OpenGLRaytracer::renderScene(Camera& camera, unsigned int width, unsigned i
 {
     glUseProgram(m_shManager->getShaderProgramID(m_shaderProgName));
 
-    m_shManager->loadUniform_(m_shaderProgName, "camera.pos", camera.getPos().x, camera.getPos().y, camera.getPos().z, 0.f);
-    m_shManager->loadUniform_(m_shaderProgName, "camera.dir", camera.getDir().x, camera.getDir().y, camera.getDir().z, 0.f);
-    m_shManager->loadUniform_(m_shaderProgName, "camera.yAxis", camera.getYAxis().x, camera.getYAxis().y, camera.getYAxis().z, 0.f);
-    m_shManager->loadUniform_(m_shaderProgName, "camera.xAxis", camera.getXAxis().x, camera.getXAxis().y, camera.getXAxis().z, 0.f);
+    m_shManager->loadUniform_(m_shaderProgName, "camera.pos", camera.pos().x, camera.pos().y, camera.pos().z, 0.f);
+    m_shManager->loadUniform_(m_shaderProgName, "camera.dir", camera.lookDir().x, camera.lookDir().y, camera.lookDir().z, 0.f);
+    m_shManager->loadUniform_(m_shaderProgName, "camera.yAxis", camera.up().x, camera.up().y, camera.up().z, 0.f);
+    m_shManager->loadUniform_(m_shaderProgName, "camera.xAxis", camera.right().x, camera.right().y, camera.right().z, 0.f);
     m_shManager->loadUniform_(m_shaderProgName, "reflectionDepth", reflectionDepth);
     glMemoryBarrier(GL_ALL_BARRIER_BITS);
     glDispatchCompute(width/WORK_GROUP_SIZE, height/WORK_GROUP_SIZE,1);

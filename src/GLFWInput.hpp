@@ -32,7 +32,7 @@ public:
         m_yPos = y;
     }
 
-    int isKeyPressed(unsigned int GLFW_Key) const
+    bool isKeyPressed(unsigned int GLFW_Key) const
     {
         return (glfwGetKey(m_window, GLFW_Key) == GLFW_PRESS);
     }

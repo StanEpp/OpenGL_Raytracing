@@ -12,7 +12,7 @@ public:
     SceneLoader(const std::shared_ptr<OpenGLRaytracer> &raytracer, const std::shared_ptr<ShaderManager> &shManager);
     ~SceneLoader();
 
-    void loadScene(Scene&, OpenGLRaytracer&);
+    void loadScene(const std::shared_ptr<Scene> &scene, const std::shared_ptr<OpenGLRaytracer> &raytracer);
 
 private:
     unsigned int m_numberOfObjInShader, m_numberOfMaterialsInShader, m_numberOfLightsInShader;

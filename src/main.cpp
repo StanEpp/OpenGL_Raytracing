@@ -46,40 +46,38 @@ int main(int argc, char* argv[]){
     int frameCounter = 0, fps = 0;
     int reflectionDepth = settings.reflectionDepth;
     bool running = true;
-    char i = 0;
 
     try{
         auto shManager = std::make_shared<ShaderManager>();
-        auto camera = std::make_shared<Camera>(width, height, settings.fovY,
+        auto camera = std::make_shared<Camera>(width, height, settings.fovY, settings.cameraSensitivity,
                                                glm::vec3(0, 0, 0), glm::vec3(0, 0, 1), glm::vec3(0, 1, 0));
 
         auto tex = std::make_shared<Texture>(width, height, GL_RGBA8);
         auto texRenderer = std::make_shared<TextureRenderer>(width, height, tex, shManager);
-        auto ort = std::make_shared<OpenGLRaytracer>(tex, *camera.get(), reflectionDepth, shManager);
+        auto raytracer = std::make_shared<OpenGLRaytracer>(tex, *camera.get(), reflectionDepth, shManager);
         auto scene = std::make_shared<Scene>();
         auto sceneReader = std::make_shared<SceneReader>();
-        auto sceneLoader = std::make_shared<SceneLoader>(ort, shManager);
+        auto sceneLoader = std::make_shared<SceneLoader>(raytracer, shManager);
 
 
         for(int i = 1; i < argc; ++i){
             std::cout << "Loading Scene: " << argv[i] << std::endl;
             sceneReader->readScene(std::string(argv[i]).c_str(), (*scene.get()));
             std::cout << "Reading Scene Complete" << std::endl;
-            sceneLoader->loadScene(*scene.get(), *ort.get());
+            sceneLoader->loadScene(scene, raytracer);
             std::cout << "Loading Scene Complete" << std::endl;
             scene->clear();
         }
         assert(glGetError() == GL_NO_ERROR);
 
         while(running){
-            assert(glGetError() == GL_NO_ERROR);
-            if(timer.getTimeDiffWithoutActualization() > static_cast<double>(1.0)/static_cast<double>(maxFPS)){
-                timer.getTimeDiff();
+            if(timer.getTimeDiffWithoutActualization() > 1./static_cast<double>(maxFPS)){
+                auto dt = timer.getTimeDiff();
 
                 inputControl.updateInput();
-                camera->update();
+                camera->update(inputControl, static_cast<float>(dt));
 
-                ort->renderScene((*camera.get()), settings.width, settings.height, reflectionDepth);
+                raytracer->renderScene((*camera.get()), settings.width, settings.height, reflectionDepth);
 
                 texRenderer->draw();
 
@@ -96,10 +94,7 @@ int main(int argc, char* argv[]){
                 }
 
                 wnd->setWindowTitle(std::to_string(fps).c_str());
-
             }
-            assert(glGetError() == GL_NO_ERROR);
-
         }
 
     } catch(std::exception&e ) {

@@ -13,17 +13,13 @@ struct Settings
     uint32_t reflectionDepth = 5;
     bool fullscreen = false;
     float fovY = 45.0f;
-    float velocityRotate = 0.5f;
-    float velocityTranslate = 0.2f;
+    float cameraSensitivity = 0.005;
 };
 
 class ConfigLoader
 {
 public:
     /*
-    Format of the config file is rough and unforgivable! Small deviations will fail!
-    (No need for sophisticated parsing for such a small config ;) )
-
     Format Type:
 
     width 1024
@@ -55,8 +51,7 @@ public:
                 else if (descr == "maxFPS"){ m_settings.maxFPS = std::stoi(value); }
                 else if (descr == "reflectionDepth"){ m_settings.reflectionDepth = std::stoi(value); }
                 else if (descr == "fullscreen"){ m_settings.fullscreen = std::stoi(value); }
-                else if (descr == "velocityRotate"){ m_settings.velocityRotate = std::stof(value); }
-                else if (descr == "velocityTranslate"){ m_settings.velocityTranslate = std::stof(value); }
+                else if (descr == "cameraSensitivity"){ m_settings.cameraSensitivity = std::stof(value); }
             }
         }
     }
