@@ -13,8 +13,8 @@ enum class Warnings : unsigned int
 {
     Unused_Material =    1 << 0,
     Unknown_Expression = 1 << 1,
-    All = ~(unsigned int)(0),
-    No = 0
+    All = ~0u,
+    No = 0u
 };
 
 constexpr inline int operator&(const Warnings x, const Warnings y)

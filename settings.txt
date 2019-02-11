@@ -1,7 +1,7 @@
 fovY 45
-cameraSensitivity 0.05
+cameraSensitivity 0.5
 reflectionDepth 5
-maxFPS 60
-width 1024
-height 768
+maxFPS 1000
+width 1280
+height 720
 fullscreen 0

@@ -50,24 +50,27 @@ int main(int argc, char* argv[]){
     try{
         auto shManager = std::make_shared<ShaderManager>();
         auto camera = std::make_shared<Camera>(width, height, settings.fovY, settings.cameraSensitivity,
-                                               glm::vec3(0, 0, 0), glm::vec3(0, 0, 1), glm::vec3(0, 1, 0));
+                                               glm::vec3(0,0,1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 
         auto tex = std::make_shared<Texture>(width, height, GL_RGBA8);
         auto texRenderer = std::make_shared<TextureRenderer>(width, height, tex, shManager);
         auto raytracer = std::make_shared<OpenGLRaytracer>(tex, *camera.get(), reflectionDepth, shManager);
         auto scene = std::make_shared<Scene>();
-        auto sceneReader = std::make_shared<SceneReader>();
-        auto sceneLoader = std::make_shared<SceneLoader>(raytracer, shManager);
 
+        {
+            auto sceneReader = std::make_shared<SceneReader>();
+            auto sceneLoader = std::make_shared<SceneLoader>(raytracer, shManager);
 
-        for(int i = 1; i < argc; ++i){
-            std::cout << "Loading Scene: " << argv[i] << std::endl;
-            sceneReader->readScene(std::string(argv[i]).c_str(), (*scene.get()));
-            std::cout << "Reading Scene Complete" << std::endl;
-            sceneLoader->loadScene(scene, raytracer);
-            std::cout << "Loading Scene Complete" << std::endl;
-            scene->clear();
+            for(int i = 1; i < argc; ++i){
+                std::cout << "Loading Scene: " << argv[i] << std::endl;
+                sceneReader->readScene(std::string(argv[i]).c_str(), (*scene.get()));
+                std::cout << "Reading Scene Complete" << std::endl;
+                sceneLoader->loadScene(scene, raytracer);
+                std::cout << "Loading Scene Complete" << std::endl;
+                scene->clear();
+            }
         }
+
         assert(glGetError() == GL_NO_ERROR);
 
         while(running){
@@ -85,6 +88,15 @@ int main(int argc, char* argv[]){
 
                 if(inputControl.isKeyPressed(GLFW_KEY_ESCAPE)){
                     running = false;
+                }
+                if(inputControl.isKeyPressedOnce(GLFW_KEY_KP_SUBTRACT)){
+                    if (reflectionDepth > 0)
+                        --reflectionDepth;
+                    std::cout << "Reflection minus\n";
+                }
+                if(inputControl.isKeyPressedOnce(GLFW_KEY_KP_ADD)){
+                    ++reflectionDepth;
+                    std::cout << "Reflection plus\n";
                 }
                 frameCounter++;
                 if(timer.getRefreshedTime() > 1.0){

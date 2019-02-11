@@ -1,9 +1,13 @@
 #version 430
-#define FAR_CLIP  1000.0f
+#define FAR_CLIP 1000.0f
 
 struct Camera{
-    vec4 pos, dir, yAxis, xAxis ;
-    float tanFovY, tanFovX;
+    vec4 pos;
+    vec4 dir;
+    vec4 yAxis;
+    vec4 xAxis;
+    float tanFovY;
+    float tanFovX;
 };
 
 //attenuation.w : 1 = Point light; 2 = Directional light
@@ -57,31 +61,22 @@ uniform uint reflectionDepth;
 
 writeonly uniform image2D outputTexture;
 
-//ray.dir has to be normalized
-float hitSphere(Ray r, Primitive s){
-
+float hitSphere(Ray r, Primitive s)
+{
     vec3 oc = r.origin - s.A.xyz;
     float s_roc = dot(r.dir, oc);
     float s_oc = dot(oc, oc);
 
-    float d = s_roc*s_roc - s_oc + s.A.w*s.A.w;
+    float d = s_roc * s_roc - s_oc + s.A.w * s.A.w;
 
     if(d < 0){
         return FAR_CLIP;
-    } else if(d == 0) {
-        if(-s_roc < 0){
-            return FAR_CLIP;
-        }
-
-        return -s_roc;
     } else {
-        float t1 = 0, t2 = 0;
-
-        t1 = sqrt(d);
-        t2 = -s_roc-t1;
+        float t1 = sqrt(d);
+        float t2 = -s_roc-t1;
         t1 = -s_roc+t1;
 
-        //ray origin lies in the sphere
+        // ray origin lies in the sphere
         if( (t1 < 0 && t2 > 0)  || (t1 > 0 && t2 <0)){
             return FAR_CLIP;
         }
@@ -94,8 +89,8 @@ float hitSphere(Ray r, Primitive s){
     }
 }
 
-float hitPlane(Ray r, Primitive p){
-
+float hitPlane(Ray r, Primitive p)
+{
     float s_nr = dot(p.B.xyz, r.dir);
 
     if(s_nr <= 0.00001f && s_nr >= -0.00001f){
@@ -104,24 +99,26 @@ float hitPlane(Ray r, Primitive p){
         float s_nv = dot(p.A.xyz, p.B.xyz);
         float s_no = dot(p.B.xyz, r.origin);
 
-        return ((s_nv-s_no)/s_nr);
+        return (s_nv-s_no) / s_nr;
     }
 
 }
 
-float hitTriangle(Ray r, Primitive t){
+float hitTriangle(Ray r, Primitive t)
+{
     vec3 AB = t.B.xyz - t.A.xyz;
     vec3 AC = t.C.xyz - t.A.xyz;
+    mat3 mat = mat3(AB, AC, -1.0f * r.dir);
 
-    float det = determinant( mat3(AB, AC, -1.0f*r.dir) );
+    float det = determinant(mat);
 
     if(det == 0.0f){
         return FAR_CLIP;
     } else {
         vec3 oA = r.origin - t.A.xyz;
 
-        mat3 Di = inverse(mat3(AB, AC, -1.0f*r.dir));
-        vec3 solution = Di*oA;
+        mat3 Di = inverse(mat);
+        vec3 solution = Di * oA;
 
         if(solution.x >= -0.0001 && solution.x <= 1.0001){
             if(solution.y >= -0.0001 && solution.y <= 1.0001){
@@ -134,94 +131,94 @@ float hitTriangle(Ray r, Primitive t){
     }
 }
 
-Ray initRay(uint x, uint y, Camera cam){
-    Ray r;
-    vec3 dir;
-    float a, b, halfWidth, halfHeight;
+// Initialize the primary ray for pixel x, y
+Ray initRay(uint x, uint y)
+{
+    float halfWidth = float(width) / 2.0f;
+    float halfHeight = float(height) / 2.0f;
 
-    halfWidth = float(width)/2.0f;
-    halfHeight = float(height)/2.0f;
+    float a = camera.tanFovX * ((float(x) - halfWidth + 0.5f) / halfWidth);
+    float b = camera.tanFovY * ((halfHeight - float(y) - 0.5f) / halfHeight);
 
-    a = cam.tanFovX*( (float(x)-halfWidth+0.5f) / halfWidth);
-    b = cam.tanFovY*( (halfHeight - float(y)-0.5f) / halfHeight);
+    vec3 dir = normalize(a * camera.xAxis.xyz + b * camera.yAxis.xyz + camera.dir.xyz);
 
-    dir = normalize( a*cam.xAxis.xyz + b*cam.yAxis.xyz + cam.dir.xyz);
-
-    r.dir = dir;
-    r.origin = cam.pos.xyz;
-
-    return r;
+    return Ray(camera.pos.xyz, dir);
 }
 
-Ray getReflectionRay(Ray r, int currentObject, float t){
-    vec3 hitPoint = r.origin + r.dir * t;
-    vec3 N = vec3(0,0,0);
+Ray getReflectionRay(Ray r, float t, int objIdx)
+{
+    vec3 intersectionPoint = r.origin + r.dir * t;
+    vec3 N = vec3(0);
 
-    switch(objects[currentObject].type){
+    // Compute Normal at intersection point
+    switch(objects[objIdx].type){
+        // Sphere
         case 1:{
-            N = normalize(hitPoint - objects[currentObject].p.A.xyz);
+            N = normalize(intersectionPoint - objects[objIdx].p.A.xyz);
         } break;
 
+        // Plane
         case 2:{
-            N = normalize(objects[currentObject].p.B.xyz);
+            N = normalize(objects[objIdx].p.B.xyz);
         } break;
 
+        // Triangle
         case 3:{
-            N = normalize(cross((objects[currentObject].p.B - objects[currentObject].p.A).xyz,
-                                (objects[currentObject].p.C - objects[currentObject].p.A).xyz));
+            N = normalize(cross((objects[objIdx].p.B - objects[objIdx].p.A).xyz,
+                                (objects[objIdx].p.C - objects[objIdx].p.A).xyz));
         } break;
     }
 
-    vec3 dir = normalize( r.dir - 2 * dot(r.dir, N) * N);
-    Ray ray = { hitPoint+dir*0.01f, dir};
+    // Compute reflected direction vector along the normal
+    // r_dir   N   reflectedDir
+    //         ^   ^
+    //      \  |  /
+    //       \ | /
+    //        v|/
+    vec3 reflectedDir = normalize(r.dir - 2 * dot(r.dir, N) * N);
 
-    return ray;
+    return Ray(intersectionPoint + reflectedDir * 0.01f, reflectedDir);
 }
 
-vec4 calculateColor(Ray r, float t, int currentObject){
-    vec4 color = vec4(0.0f, 0.0f, 0.0f, 0.0f);
+vec4 calculateColor(Ray r, float t, int objIdx)
+{
+    vec4 color = vec4(0);
 
-    if(currentObject != -1){
-        vec3 hitPoint = r.origin + t*r.dir;
-        vec3 N, L, H, attCoef;
-        Ray shadowRay;
-        bool inShadow = false;
-        bool lightet = false;
-        float temp = FAR_CLIP;
-        int	x = -1, lightType = 1;
+    if (objIdx != -1) {
+        vec3 N, L, H;
+        int matIdx = objects[objIdx].material_index;
+        vec3 intersectionPoint = r.origin + t * r.dir;
 
-        switch(objects[currentObject].type){
+        switch (objects[objIdx].type) {
             case 1:{
-                N = normalize(hitPoint - objects[currentObject].p.A.xyz);
+                N = normalize(intersectionPoint - objects[objIdx].p.A.xyz);
             } break;
 
             case 2:{
-                N = normalize(objects[currentObject].p.B.xyz);
+                N = normalize(objects[objIdx].p.B.xyz);
 
                 //Mirror the normal if the camera's position is at the other side of the plane.
                 //This avoids considering light sources behind the plane.
-                if( dot(N, camera.pos.xyz - hitPoint) < 0){
-                    N = -1.0f*N;
+                if( dot(N, camera.pos.xyz - intersectionPoint) < 0){
+                    N = -1.f * N;
                 }
             } break;
 
             case 3:{
-                N = normalize(cross((objects[currentObject].p.B - objects[currentObject].p.A).xyz,
-                                    (objects[currentObject].p.C - objects[currentObject].p.A).xyz));
+                N = normalize(cross((objects[objIdx].p.B - objects[objIdx].p.A).xyz,
+                                    (objects[objIdx].p.C - objects[objIdx].p.A).xyz));
             } break;
         }
 
-        hitPoint += 0.01f*N;
+        intersectionPoint += 0.01f * N;
 
-        for(int j = 0; j < numLights; ++j){
-            inShadow = false;
+        for (int j = 0; j < numLights; ++j) {
+            int lightType = int(lights[j].attenuation.w);
 
-            lightType = int(lights[j].attenuation.w);
-
-            switch(lightType){
+            switch (lightType) {
                 //Point light
                 case 1:{
-                    L = normalize(lights[j].pos_dir.xyz - hitPoint);
+                    L = normalize(lights[j].pos_dir.xyz - intersectionPoint);
                 }break;
 
                 //Directional light
@@ -230,10 +227,13 @@ vec4 calculateColor(Ray r, float t, int currentObject){
                 }break;
             }
 
-            shadowRay = Ray( hitPoint, L);
+            Ray shadowRay = Ray( intersectionPoint, L);
+            bool inShadow = false;
 
-            for(int i = 0; i < numObj; ++i){
-                switch(objects[i].type){
+            for (int i = 0; i < numObj; ++i) {
+                float temp = FAR_CLIP;
+
+                switch (objects[i].type) {
                     case 1:{
                         temp = hitSphere(shadowRay, objects[i].p);
                     } break;
@@ -247,10 +247,13 @@ vec4 calculateColor(Ray r, float t, int currentObject){
                     } break;
                 }
 
-                switch(lightType){
+                switch (lightType) {
                     //Point light
                     case 1:{
-                        if( (temp < FAR_CLIP && temp >= -0.001f && temp < length(hitPoint - lights[j].pos_dir.xyz))){
+                        if (temp < FAR_CLIP &&
+                            temp >= -0.001f &&
+                            temp < length(intersectionPoint - lights[j].pos_dir.xyz))
+                        {
                             inShadow = true;
                             i = int(numObj);
                         }
@@ -258,7 +261,7 @@ vec4 calculateColor(Ray r, float t, int currentObject){
 
                     //Directional light
                     case 2:{
-                        if(temp < FAR_CLIP && temp >= -0.001f){
+                        if (temp < FAR_CLIP && temp >= -0.001f) {
                             inShadow = true;
                             i = int(numObj);
                         }
@@ -267,64 +270,58 @@ vec4 calculateColor(Ray r, float t, int currentObject){
 
             }
 
-            if(!inShadow){
+            if (!inShadow) {
+                H = normalize(L + normalize(camera.pos.xyz - intersectionPoint));
 
-                H = normalize(L + normalize(camera.pos.xyz-hitPoint));
+                if (dot(N, L) > 0) {
+                    float dist = length(lights[j].pos_dir.xyz - intersectionPoint);
+                    vec3 attCoef = lights[j].color.xyz / ( lights[j].attenuation.x +
+                                   lights[j].attenuation.y * dist +
+                                   lights[j].attenuation.z * dist * dist * 0.01f);
 
-                if(dot(N, L) > 0){
-                    attCoef = lights[j].color.xyz / ( lights[j].attenuation.x +
-                              lights[j].attenuation.y * length(lights[j].pos_dir.xyz - hitPoint)  +
-                              lights[j].attenuation.z * pow( length(lights[j].pos_dir.xyz - hitPoint)*0.1f , 2) );
-
-                    x = objects[currentObject].material_index;
-
-                    if(x != -1){
-                        color += vec4( attCoef * (materials[x].diffuse.xyz * max(dot(N, L), 0) +
-                                       materials[x].specularity.xyz * pow( max( dot(-N,H), 0), materials[x].shininess)),
-                                       0.0f);
+                    // Check if the object has a material.
+                    // If not use default values to compute color.
+                    if (matIdx != -1) {
+                        vec3 phong = materials[matIdx].diffuse.xyz * dot(N, L) +
+                                     materials[matIdx].specularity.xyz * pow(max(dot(-N,H), 0), materials[matIdx].shininess);
+                        color += vec4(attCoef * phong, 0.0f);
                     } else {
-                        color += vec4( attCoef * (vec3(0.5,0.5,0.5) * max(dot(N, L), 0) +
-                                       vec3(0.5,0.5,0.5) * pow( max( dot(N,H), 0), 10)),
-                                       0.0f);
+                        vec3 phong = vec3(0.5,0.5,0.5) * max(dot(N, L), 0) +
+                                     vec3(0.5,0.5,0.5) * pow( max( dot(N,H), 0), 10);
+                        color += vec4(attCoef * phong, 0.0f);
                     }
                 }
-
-                inShadow = false;
-                lightet = true;
             }
-
         }
 
-        if(lightet){
-            if(x!=-1){
-                color += materials[objects[currentObject].material_index].emission;
-            }
-
+        if (matIdx != -1) {
+            color += materials[matIdx].emission;
         }
-
     }
 
     return color;
 }
 
 layout (local_size_x = 16, local_size_y = 16, local_size_z = 1) in;
-void main(){
+void main()
+{
     uint x = gl_GlobalInvocationID.x;
     uint y = gl_GlobalInvocationID.y;
 
-    if(x < width && y < height){
-        vec4 color = vec4(0.0f, 0.0f, 0.0f, 0.0f);
-        vec4 tempColor = vec4(0);
+    if (x < width && y < height) {
+        vec4 color = vec4(0.f);
 
-        //Initialize the ray
-        Ray r = initRay(x, y, camera);
+        // Initialize the primary ray
+        Ray r = initRay(x, y);
 
-        float t = FAR_CLIP, temp = FAR_CLIP;
-        int currentObject = -1;
+        // Check for intersection with an object in a brute force manner
+        // No acceleration is implemented!
+        for (uint n = 0; n < reflectionDepth + 1; ++n) {
 
-        //Check for intersection with an object in a brute force manner
-        //No acceleration is implemented yet!(Octrees or kd-trees are possible);
-        for(uint n = 0; n < reflectionDepth; ++n){
+            int objIdx = -1;
+            float t = FAR_CLIP, temp = FAR_CLIP;
+
+            // Check for closest intersection of ray r and an object
             for(int i = 0; i < numObj; i++){
                 switch(objects[i].type){
                     case 1:{
@@ -341,32 +338,30 @@ void main(){
                 }
                 if(temp < t && temp >= -0.001f){
                     t = temp;
-                    currentObject = i;
+                    objIdx = i;
                 }
             }
 
-            if(currentObject != -1){
-                tempColor = calculateColor(r, t, currentObject);
-                if(tempColor != vec4(0)){
-                    if(materials[objects[currentObject].material_index].specularity != vec4(0)){
-                        color += materials[objects[currentObject].material_index].specularity * tempColor;
-                        r = getReflectionRay(r, currentObject, t);
+            // Check if the ray hit an object.
+            // If so compute Color at intersection otherwise exit early.
+            if (objIdx != -1) {
+                vec4 tempColor = calculateColor(r, t, objIdx);
+                vec4 spec = materials[objects[objIdx].material_index].specularity;
 
-                        currentObject = -1;
-                        temp = t = FAR_CLIP;
-                    } else {
-                        color += tempColor;
-                        n = reflectionDepth;
-                    }
+                // Check if material specularity is defined (i.e. spec != vec4(0))
+                // If so compute reflection ray and continue loop otherwise exit early.
+                if (dot(spec, spec) > 0.001){
+                    color += spec * tempColor;
+                    r = getReflectionRay(r, t, objIdx);
                 } else {
-                    n = reflectionDepth;
+                    color += tempColor;
+                    break;
                 }
             } else {
-                n = reflectionDepth;
+                break;
             }
         }
 
         imageStore(outputTexture, ivec2(x, y), color);
-
     }
 }

@@ -55,10 +55,11 @@ public:
             const auto &col = p.color;
             const auto &att = p.attenuation;
 
+            // pl.attenuation.w = 1 encodes type pointlight
             PointLight pl;
             pl.position = glm::vec4(pos[0], pos[1], pos[2], 1.f);
             pl.color = glm::vec4(col[0], col[1], col[2], 0.f);
-            pl.attenuation = glm::vec4(att[0], att[1], att[2], 0.f);
+            pl.attenuation = glm::vec4(att[0], att[1], att[2], 1.f);
             scene.pointLights.push_back(pl);
         }
 
@@ -68,10 +69,11 @@ public:
             const auto &col = d.color;
             const auto &att = d.attenuation;
 
+            // dl.attenuation.w = 1 encodes type directionalLight
             DirectionalLight dl;
             dl.direction = glm::vec4(dir[0], dir[1], dir[2], 1.f);
             dl.color = glm::vec4(col[0], col[1], col[2], 0.f);
-            dl.attenuation = glm::vec4(att[0], att[1], att[2], 0.f);
+            dl.attenuation = glm::vec4(att[0], att[1], att[2], 2.f);
             scene.directionalLights.push_back(dl);
         }
 

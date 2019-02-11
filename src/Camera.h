@@ -30,10 +30,10 @@ public:
     int height() const { return m_height; }
     float fovY() const{ return m_fovY; }
     float fovX() const { return m_fovX; }
-    glm::vec3 pos() const { return m_pos; }
-    glm::vec3 lookDir() const { return m_lookDir; }
-    glm::vec3 up() const { return m_up; }
-    glm::vec3 right() const { return m_right; }
+    const glm::vec3& pos() const { return m_pos; }
+    const glm::vec3& lookDir() const { return m_lookDir; }
+    const glm::vec3& up() const { return m_up; }
+    const glm::vec3& right() const { return m_right; }
 
     void update(const GLFWInput &input, float dt)
     {
@@ -54,11 +54,15 @@ public:
 
         dyRot = -1.f * input.getXPosDiff() * m_sensitivity * dt;
         dxRot = -1.f * input.getYPosDiff() * m_sensitivity * dt;
-        std::cout << "dyRot " << dyRot << " dxRot " << dxRot << std::endl;
-        m_pos += dz * m_lookDir + dx * m_right;
+        m_pos += 6.f * ( dz * m_lookDir + dx * m_right);
         m_right = glm::normalize(glm::rotate(m_right, dyRot, m_up));
         m_up = glm::normalize(glm::rotate(m_up, dxRot, m_right));
         m_lookDir = glm::normalize(glm::cross(m_right, m_up));
+
+        // std::cout << "fovX " << m_fovX << " fovY " << m_fovY << std::endl;
+        std::cout << m_pos.x << " " << m_pos.y << " " << m_pos.z << std::endl;
+        // std::cout << m_dir.x << " " << m_dir.y << " " << m_dir.z << " " << std::endl;
+        // std::cout << m_lookDir.x << " " << m_lookDir.y << " " << m_lookDir.z << " " << std::endl;
     }
 
 private:

@@ -10,24 +10,33 @@ v -15 50 -25
 v 15 50 -25
 v 0 25 0
 
+v 0 0 0
+vn 0 1 0
+v 0 50 0
+vn 0 -1 0
+
 usemtl Mirror
-f 0 1 2
-f 2 3 0
-f 6 5 4
-f 6 4 7
-f 1 5 6
-f 6 2 1
-f 7 4 0
-f 7 0 3
+f 1 2 3
+f 3 4 1
+f 7 6 5
+f 7 5 8
+f 2 6 7
+f 7 3 2
+f 1 5 8
+f 1 8 4
 
 usemtl Sphere
-sphere 8/3
+sphere 9/3
 
-pointLight 0/0.5/0 5/0/0 0/0.5/0
-pointLight 0/0/0   45/0.5/0 0/0.5/0.5
-pointLight 14/1/0  25/1/0   0/1/3
-pointLight -14/1/0 25/1/0   0/1/3
+usemtl Floor
+plane 10/1
+plane 11/2
+
+pointLight 0/1/0 5/1/0 0/1/5
+pointLight 0/1/0 45/1/0 0/1/5
+pointLight 14/1/0 25/1/0 0/1/3
+pointLight -14/1/0 25/1/0 0/1/3
 pointLight 0/1/0 25/1/0 24/1/3
 pointLight 0/1/0 25/1/0 -24/1/3
-pointLight 0/1/0 1/1/0  0/1/3
+pointLight 0/1/0 1/1/0 0/1/3
 pointLight 0/1/0 49/1/0 0/1/3
