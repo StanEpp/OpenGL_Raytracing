@@ -1,11 +1,11 @@
 #pragma once
 
+#include <cmath>
+
 #include "GLFWInput.hpp"
 
-#define GLM_ENABLE_EXPERIMENTAL
-
 #include <glm/glm.hpp>
-#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 class Camera
 {
@@ -20,10 +20,10 @@ public:
     {
         m_lookDir = glm::normalize(lookAt - pos);
         m_right = glm::normalize(glm::cross(up, m_lookDir));
-        m_up = glm::cross(m_lookDir, m_right);
+        m_up = glm::cross(m_right, m_lookDir);
 
         m_fovY = std::tan(fovY * std::acos(-1) / 180.f / 2.0f);
-        m_fovX = (static_cast<float>(m_width)*m_fovY)/static_cast<float>(m_height);
+        m_fovX = (static_cast<float>(m_width) * m_fovY)/static_cast<float>(m_height);
     }
 
     int width() const{ return m_width; }
@@ -37,8 +37,8 @@ public:
 
     void update(const GLFWInput &input, float dt)
     {
-        float dz, dx, dy, dyRot, dxRot, dzRot;
-        dz = dx = dy = dyRot = dxRot = dzRot = 0.f;
+        float dz, dx, dy;
+        dz = dx = dy = 0.f;
 
         if (input.isKeyPressed(GLFW_KEY_W)) {
             dz = m_sensitivity * dt;
@@ -52,27 +52,35 @@ public:
             dx = -1.f * m_sensitivity * dt;
         }
 
-        dyRot = -1.f * input.getXPosDiff() * m_sensitivity * dt;
-        dxRot = -1.f * input.getYPosDiff() * m_sensitivity * dt;
-        m_pos += 6.f * ( dz * m_lookDir + dx * m_right);
-        m_right = glm::normalize(glm::rotate(m_right, dyRot, m_up));
-        m_up = glm::normalize(glm::rotate(m_up, dxRot, m_right));
-        m_lookDir = glm::normalize(glm::cross(m_right, m_up));
+        m_accRotY += input.getXPosDiff() * m_sensitivity * dt;
+        m_accRotX += input.getYPosDiff() * m_sensitivity * dt;
+        m_accRotY = std::fmod(m_accRotY, 360);
+        m_accRotX = std::fmod(m_accRotX, 360);
 
-        // std::cout << "fovX " << m_fovX << " fovY " << m_fovY << std::endl;
-        std::cout << m_pos.x << " " << m_pos.y << " " << m_pos.z << std::endl;
-        // std::cout << m_dir.x << " " << m_dir.y << " " << m_dir.z << " " << std::endl;
-        // std::cout << m_lookDir.x << " " << m_lookDir.y << " " << m_lookDir.z << " " << std::endl;
+        auto rotX = glm::rotate(glm::mat4(1.f), m_accRotX, glm::vec3(1.f, 0.f, 0.f));
+        auto rotY = glm::rotate(glm::mat4(1.f), m_accRotY, glm::vec3(0.f, 1.f, 0.f));
+
+        auto rotMatrix = rotY * rotX;
+
+        m_lookDir  = glm::normalize(glm::vec3(rotMatrix * glm::vec4(0.f, 0.f, -1.f, 0.f)));
+        m_up  = glm::normalize(glm::vec3(rotMatrix * glm::vec4(0.f, 1.f, 0.f, 0.f)));
+        m_right = glm::normalize(glm::cross(m_lookDir, m_up));
+
+        m_pos += m_movSpeed * ( dz * m_lookDir + dx * m_right);
     }
 
 private:
-    int	m_width;
-    int m_height;
-    float m_fovY;
-    float m_fovX;
-    float m_sensitivity;
-    glm::vec3 m_pos;
-    glm::vec3 m_lookDir;
-    glm::vec3 m_up;
-    glm::vec3 m_right;
+    int	m_width = 1024;
+    int m_height = 768;
+    float m_fovY = 0.f;
+    float m_fovX = 0.f;
+    float m_accRotX = 0.f;
+    float m_accRotY = 0.f;
+    float m_sensitivity  = 1.f;
+    float m_movSpeed = 1.f;
+
+    glm::vec3 m_pos{ 0.f, 0.f, 0.f };
+    glm::vec3 m_lookDir{ 0.f, 0.f, -1.f };
+    glm::vec3 m_up{ 0.f, 1.f, 0.f };
+    glm::vec3 m_right{ 1.f, 0.f, 0.f };
 };

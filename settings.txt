@@ -1,5 +1,6 @@
 fovY 45
 cameraSensitivity 0.5
+movementSpeed 10
 reflectionDepth 5
 maxFPS 1000
 width 1280

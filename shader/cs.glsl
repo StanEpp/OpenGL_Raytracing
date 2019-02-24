@@ -73,8 +73,8 @@ float hitSphere(Ray r, Primitive s)
         return FAR_CLIP;
     } else {
         float t1 = sqrt(d);
-        float t2 = -s_roc-t1;
-        t1 = -s_roc+t1;
+        float t2 = -s_roc - t1;
+        t1 = -s_roc + t1;
 
         // ray origin lies in the sphere
         if( (t1 < 0 && t2 > 0)  || (t1 > 0 && t2 <0)){
@@ -99,7 +99,7 @@ float hitPlane(Ray r, Primitive p)
         float s_nv = dot(p.A.xyz, p.B.xyz);
         float s_no = dot(p.B.xyz, r.origin);
 
-        return (s_nv-s_no) / s_nr;
+        return (s_nv - s_no) / s_nr;
     }
 
 }
@@ -140,7 +140,7 @@ Ray initRay(uint x, uint y)
     float a = camera.tanFovX * ((float(x) - halfWidth + 0.5f) / halfWidth);
     float b = camera.tanFovY * ((halfHeight - float(y) - 0.5f) / halfHeight);
 
-    vec3 dir = normalize(a * camera.xAxis.xyz + b * camera.yAxis.xyz + camera.dir.xyz);
+    vec3 dir = normalize((a * camera.xAxis + b * camera.yAxis + camera.dir).xyz);
 
     return Ray(camera.pos.xyz, dir);
 }
@@ -171,7 +171,7 @@ Ray getReflectionRay(Ray r, float t, int objIdx)
 
     // Compute reflected direction vector along the normal
     // r_dir   N   reflectedDir
-    //         ^   ^
+    //     \   ^   ^
     //      \  |  /
     //       \ | /
     //        v|/
@@ -227,7 +227,7 @@ vec4 calculateColor(Ray r, float t, int objIdx)
                 }break;
             }
 
-            Ray shadowRay = Ray( intersectionPoint, L);
+            Ray shadowRay = Ray(intersectionPoint, L);
             bool inShadow = false;
 
             for (int i = 0; i < numObj; ++i) {
@@ -275,7 +275,7 @@ vec4 calculateColor(Ray r, float t, int objIdx)
 
                 if (dot(N, L) > 0) {
                     float dist = length(lights[j].pos_dir.xyz - intersectionPoint);
-                    vec3 attCoef = lights[j].color.xyz / ( lights[j].attenuation.x +
+                    vec3 attCoef = lights[j].color.xyz / (lights[j].attenuation.x +
                                    lights[j].attenuation.y * dist +
                                    lights[j].attenuation.z * dist * dist * 0.01f);
 

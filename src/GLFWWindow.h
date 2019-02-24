@@ -1,8 +1,5 @@
 #pragma once
 
-#include <stdlib.h>
-#include <stdexcept>
-
 #include <GLFW/glfw3.h>
 
 class GLFWWindow
@@ -75,7 +72,6 @@ private:
 
     int	m_width;
     int m_height;
-    int	m_windowHandle;
     std::string	m_windowName;
     bool m_fullscreen;
     GLFWwindow*	m_window;

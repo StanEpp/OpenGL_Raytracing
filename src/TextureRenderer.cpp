@@ -1,11 +1,13 @@
 #include "TextureRenderer.h"
-#include "Vertex.h"
+#include <glm/glm.hpp>
 
-TextureRenderer::TextureRenderer(int width, int height,
-                                 const std::shared_ptr<Texture> &texture,
+struct Vertex{
+    glm::vec4 pos;
+    glm::vec2 texCoor;
+};
+
+TextureRenderer::TextureRenderer(const std::shared_ptr<Texture> &texture,
                                  const std::shared_ptr<ShaderManager> &shManager) :
-    m_width(width),
-    m_height(height),
     m_texture(texture),
     m_shManager(shManager)
 {

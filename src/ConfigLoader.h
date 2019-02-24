@@ -7,13 +7,14 @@
 
 struct Settings
 {
-    uint32_t width = 1024;
-    uint32_t height = 768;
+    uint32_t width = 848;
+    uint32_t height = 480;
     uint32_t maxFPS = 60;
     uint32_t reflectionDepth = 5;
     bool fullscreen = false;
     float fovY = 45.0f;
-    float cameraSensitivity = 0.005;
+    float cameraSensitivity = 0.005f;
+    float movementSpeed = 5.f;
 };
 
 class ConfigLoader
@@ -40,9 +41,9 @@ public:
         std::string line, value, descr;
         std::istringstream token;
 
-        while(!file.eof()){
+        while (!file.eof()) {
             getline(file, line);
-            if(!line.empty()){
+            if (!line.empty()) {
                 token = std::istringstream(line);
                 getline(token, descr, ' ');
                 getline(token, value, ' ');
@@ -52,6 +53,7 @@ public:
                 else if (descr == "reflectionDepth"){ m_settings.reflectionDepth = std::stoi(value); }
                 else if (descr == "fullscreen"){ m_settings.fullscreen = std::stoi(value); }
                 else if (descr == "cameraSensitivity"){ m_settings.cameraSensitivity = std::stof(value); }
+                else if (descr == "movementSpeed"){ m_settings.movementSpeed = std::stof(value); }
             }
         }
     }

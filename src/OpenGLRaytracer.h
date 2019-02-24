@@ -7,8 +7,6 @@
 #include "ShaderManager.hpp"
 #include "Texture.h"
 #include "Camera.h"
-#include "Lights.h"
-#include "Primitives.h"
 
 class OpenGLRaytracer
 {

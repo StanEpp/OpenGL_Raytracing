@@ -4,11 +4,8 @@
 #include <array>
 #include <string>
 
-#ifndef _GL3W_
-#define _GL3W_
 #include "GL/gl3w.h"
 #include <GLFW/glfw3.h>
-#endif
 
 #include "ShaderBaseModel.hpp"
 
@@ -20,11 +17,9 @@ struct are_same<T, U, TT...> :
     std::integral_constant < bool, std::is_same<T, U>::value && are_same<T, TT...>::value >
 {};
 
-/* Usually used as Singleton. But for this small project it suffices to use it
-*  as a plain object in since it's the only instance in the whole project.
-*
-*  Note that not all the functionalities of this class are used in this project.
-*/
+/* A rather lengthy management class for opengl shader, which is copy pasted from other personal projects.
+ * Note that not all the functionalities of this class are used in this project.
+ */
 class ShaderManager
 {
 public:

@@ -50,10 +50,10 @@ int main(int argc, char* argv[]){
     try{
         auto shManager = std::make_shared<ShaderManager>();
         auto camera = std::make_shared<Camera>(width, height, settings.fovY, settings.cameraSensitivity,
-                                               glm::vec3(0,0,1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+                                               glm::vec3(0,1,5), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 
         auto tex = std::make_shared<Texture>(width, height, GL_RGBA8);
-        auto texRenderer = std::make_shared<TextureRenderer>(width, height, tex, shManager);
+        auto texRenderer = std::make_shared<TextureRenderer>(tex, shManager);
         auto raytracer = std::make_shared<OpenGLRaytracer>(tex, *camera.get(), reflectionDepth, shManager);
         auto scene = std::make_shared<Scene>();
 

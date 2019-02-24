@@ -21,5 +21,4 @@ private:
     unsigned int m_height;
     GLuint m_textureID;
     GLuint m_textureFormat;
-
 };

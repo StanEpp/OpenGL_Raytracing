@@ -24,10 +24,7 @@ set(HEADER_FILES
     src/Camera.h
     src/GLFWWindow.h
     src/GLFWInput.hpp
-    src/Lights.h
     src/OpenGLRaytracer.h
-    src/Primitives.h
-    src/Ray.h
     src/Scene.h
     src/SceneLoader.h
     src/SceneReader.h
@@ -35,7 +32,6 @@ set(HEADER_FILES
     src/ShaderManager.hpp
     src/Texture.h
     src/TextureRenderer.h
-    src/Vertex.h
     src/ConfigLoader.h
     src/objSpirit.hpp
 )

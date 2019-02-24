@@ -51,8 +51,8 @@ public:
     {
         if (isKeyPressed(GLFW_Key)){
             if (m_keyPressed.find(GLFW_Key) == m_keyPressed.end()){
-            m_keyPressed.insert(GLFW_Key);
-            return true;
+                m_keyPressed.insert(GLFW_Key);
+                return true;
             }
         } else {
             m_keyPressed.erase(GLFW_Key);
