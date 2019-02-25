@@ -2,7 +2,7 @@
 
 #include <string>
 #include "Scene.h"
-#include "objSpirit.hpp"
+#include <objSpirit.hpp>
 
 class SceneReader
 {

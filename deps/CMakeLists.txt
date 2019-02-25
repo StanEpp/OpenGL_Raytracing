@@ -31,7 +31,20 @@ externalproject_add(glfw_ext
     URL https://github.com/glfw/glfw/releases/download/3.2.1/glfw-3.2.1.zip
 )
 
+externalproject_add(objSpirit_ext
+    PREFIX ${DEPENDENCY_DIR}/objSpirit
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${DEPENDENCY_INSTALL_DIR}
+    UPDATE_COMMAND ""
+    UPDATE_DISCONNECTED 1
+    URL https://github.com/StanEpp/objSpirit/archive/master.zip
+)
+
 add_library(glfw SHARED IMPORTED GLOBAL)
-set_target_properties(glfw PROPERTIES IMPORTED_LOCATION 
+add_library(objSpirit SHARED IMPORTED GLOBAL)
+
+set_target_properties(glfw PROPERTIES IMPORTED_LOCATION
   "${DEPENDENCY_INSTALL_LIB_DIR}/${CMAKE_SHARED_MODULE_PREFIX}glfw${CMAKE_SHARED_LIBRARY_SUFFIX}"
+)
+set_target_properties(objSpirit PROPERTIES IMPORTED_LOCATION
+  "${DEPENDENCY_INSTALL_LIB_DIR}64/${CMAKE_SHARED_MODULE_PREFIX}objSpirit${CMAKE_SHARED_LIBRARY_SUFFIX}"
 )
