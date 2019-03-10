@@ -6,18 +6,15 @@ add_subdirectory(deps)
 
 include_directories(${DEPENDENCY_INCLUDE_DIR})
 include_directories(${CMAKE_SOURCE_DIR})
-include_directories(${OBJSPIRIT_INCLUDE_DIR})
-
-find_package(Boost REQUIRED)
 
 set(SOURCE_FILES
     src/main.cpp
     src/OpenGLRaytracer.cpp
     src/gl3w.c
-    src/SceneLoader.cpp
     src/ShaderManager.cpp
     src/Texture.cpp
     src/TextureRenderer.cpp
+    src/SceneManager.cpp
 )
 
 set(HEADER_FILES
@@ -26,8 +23,7 @@ set(HEADER_FILES
     src/GLFWInput.hpp
     src/OpenGLRaytracer.h
     src/Scene.h
-    src/SceneLoader.h
-    src/SceneReader.h
+    src/SceneManager.hpp
     src/ShaderBaseModel.hpp
     src/ShaderManager.hpp
     src/Texture.h
@@ -59,5 +55,5 @@ endforeach()
 configure_file(settings.txt settings.txt COPYONLY)
 add_executable(OpenGL_Raytracer ${SOURCE_FILES} ${HEADER_FILES})
 add_dependencies(OpenGL_Raytracer glfw_ext glm_ext objSpirit_ext)
-target_link_libraries(OpenGL_Raytracer PUBLIC glfw objSpirit dl boost_filesystem boost_system)
+target_link_libraries(OpenGL_Raytracer PUBLIC glfw objSpirit dl)
 target_compile_options(OpenGL_Raytracer PUBLIC -Wall -g)

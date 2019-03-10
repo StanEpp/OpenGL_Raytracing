@@ -9,8 +9,7 @@
 #include "TextureRenderer.h"
 #include "OpenGLRaytracer.h"
 #include "GLFWTimer.h"
-#include "SceneReader.h"
-#include "SceneLoader.h"
+#include "SceneManager.hpp"
 #include "GLFWInput.hpp"
 #include "ConfigLoader.h"
 
@@ -55,20 +54,10 @@ int main(int argc, char* argv[]){
         auto tex = std::make_shared<Texture>(width, height, GL_RGBA8);
         auto texRenderer = std::make_shared<TextureRenderer>(tex, shManager);
         auto raytracer = std::make_shared<OpenGLRaytracer>(tex, *camera.get(), reflectionDepth, shManager);
-        auto scene = std::make_shared<Scene>();
 
         {
-            auto sceneReader = std::make_shared<SceneReader>();
-            auto sceneLoader = std::make_shared<SceneLoader>(raytracer, shManager);
-
-            for(int i = 1; i < argc; ++i){
-                std::cout << "Loading Scene: " << argv[i] << std::endl;
-                sceneReader->readScene(std::string(argv[i]).c_str(), (*scene.get()));
-                std::cout << "Reading Scene Complete" << std::endl;
-                sceneLoader->loadScene(scene, raytracer);
-                std::cout << "Loading Scene Complete" << std::endl;
-                scene->clear();
-            }
+            SceneManager sceneManager(raytracer, shManager);
+            sceneManager.uploadScenes({argv + 1, argv + argc});
         }
 
         assert(glGetError() == GL_NO_ERROR);

@@ -19,6 +19,9 @@ struct DirectionalLight
     glm::vec4 color;
     glm::vec4 attenuation;
 };
+// The number of attributes in the struct. No Reflection yet in C++.
+// Will be needed for uploading the scene in the SceneManager.
+constexpr unsigned int NumAttributesLights = 3;
 
 //Alignment will be round to 16bytes
 struct Sphere
@@ -46,6 +49,7 @@ struct Material
     glm::vec4 emission;
     float shininess;
 };
+constexpr unsigned int NumAttributesMaterial = 4;
 
 struct Primitive
 {
@@ -53,6 +57,7 @@ struct Primitive
     int type;
     int material_index;
 };
+constexpr unsigned int NumAttributesObjects = 5;
 
 struct Scene
 {
@@ -64,12 +69,12 @@ struct Scene
     std::vector<DirectionalLight> directionalLights;
     std::vector<Material> materials;
 
-    int numberOfObjects()
+    int numObjects()
     {
         return triangles.size() + spheres.size() + planes.size();
     }
 
-    int numberOfLights()
+    int numLights()
     {
         return pointLights.size() + directionalLights.size();
     }

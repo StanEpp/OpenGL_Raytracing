@@ -77,7 +77,7 @@ private:
     float m_accRotX = 0.f;
     float m_accRotY = 0.f;
     float m_sensitivity  = 1.f;
-    float m_movSpeed = 1.f;
+    float m_movSpeed = 10.f;
 
     glm::vec3 m_pos{ 0.f, 0.f, 0.f };
     glm::vec3 m_lookDir{ 0.f, 0.f, -1.f };
