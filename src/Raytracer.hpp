@@ -1,26 +1,25 @@
 #pragma once
 
+#include <vector>
+#include <string>
+
 #include "GL/gl3w.h"
 #include <GLFW/glfw3.h>
 
-#include <cassert>
-#include <memory>
+#include "ConfigLoader.hpp"
 #include "GLFWWindow.hpp"
 #include "ShaderManager.hpp"
-#include "GLFWTimer.hpp"
-#include "SceneManager.hpp"
-#include "GLFWInput.hpp"
-#include "ConfigLoader.hpp"
-#include "Screenquad.hpp"
 #include "Texture.hpp"
+#include "Screenquad.hpp"
 #include "Camera.hpp"
+#include "GLFWInput.hpp"
 
 
 class Raytracer
 {
 private:
     Settings m_settings;
-    std::unique_ptr<GLFWWindow> m_window;
+    GLFWWindow m_window;
     ShaderManager m_shManager;
     Texture m_renderedToTexture;
     Screenquad m_screenquad;

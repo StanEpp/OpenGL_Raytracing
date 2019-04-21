@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <memory>
+
 #include "Scene.hpp"
 #include "ShaderManager.hpp"
 

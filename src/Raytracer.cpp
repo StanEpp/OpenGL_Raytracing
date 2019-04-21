@@ -1,4 +1,6 @@
 #include "Raytracer.hpp"
+#include "GLFWTimer.hpp"
+#include "SceneManager.hpp"
 
 #include <limits>
 
@@ -7,13 +9,13 @@
 
 Raytracer::Raytracer(const std::string& settingsFile, const std::vector<std::string> &sceneFiles) :
     m_settings(ConfigLoader(settingsFile).settings()),
-    m_window(std::make_unique<GLFWWindow>(m_settings.width, m_settings.height, "RayTracer", m_settings.fullscreen)),
+    m_window(m_settings.width, m_settings.height, "RayTracer", m_settings.fullscreen),
     m_shManager(),
     m_renderedToTexture(m_settings.width, m_settings.height),
     m_screenquad(m_shManager),
     m_camera(m_settings.width, m_settings.height, m_settings.fovY, m_settings.cameraSensitivity, glm::vec3(0, 1, 5), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0))
 {
-    m_inputControl.bindInputToWindow(*m_window);
+    m_inputControl.bindInputToWindow(m_window);
 
     m_storageBufferIDs = new GLuint[3];
     createComputeShader();
@@ -96,7 +98,7 @@ void Raytracer::run()
 
             m_screenquad.draw(m_renderedToTexture);
 
-            m_window->swapBuffers();
+            m_window.swapBuffers();
 
             if (m_inputControl.isKeyPressed(GLFW_KEY_ESCAPE)) {
                 running = false;
@@ -112,7 +114,7 @@ void Raytracer::run()
             frameCounter++;
 
             if (frameTimer.timestampDiff() > 1.0) {
-                m_window->setWindowTitle(std::to_string(frameCounter).c_str());
+                m_window.setWindowTitle(std::to_string(frameCounter).c_str());
                 frameCounter = 0;
                 frameTimer.setTimestamp();
             }

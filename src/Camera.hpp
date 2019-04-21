@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cmath>
-
 #include "GLFWInput.hpp"
 
 #include <glm/glm.hpp>
