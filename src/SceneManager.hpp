@@ -2,23 +2,19 @@
 
 #include <string>
 #include <memory>
-#include "Scene.h"
-
-class OpenGLRaytracer;
-class ShaderManager;
+#include "Scene.hpp"
+#include "ShaderManager.hpp"
 
 class SceneManager
 {
 public:
-    SceneManager(const std::shared_ptr<OpenGLRaytracer> &raytracer,
-                 const std::shared_ptr<ShaderManager> &shManager);
 
-    void uploadScenes(const std::vector<std::string> &filepaths);
+    void uploadScenes(const std::vector<std::string> &filepaths, ShaderManager& shManager, GLuint computeShaderID, GLuint* computerShaderstorageBufferIDs);
 
 private:
-    void initialize(const std::shared_ptr<OpenGLRaytracer> &raytracer);
+    void initialize(GLuint computerShaderID);
     void readScene(const std::string &filepath);
-    void uploadScene();
+    void uploadScene(ShaderManager& shManager, GLuint computeShaderID, GLuint* computerShaderstorageBufferIDs);
 
     unsigned int m_numObjInShader = 0;
     unsigned int m_numMaterialsInShader = 0;
@@ -36,7 +32,5 @@ private:
     int *m_mOffsets = nullptr;
     int *m_lOffsets = nullptr;
 
-    std::shared_ptr<OpenGLRaytracer> m_raytracer;
-    std::shared_ptr<ShaderManager> m_shManager;
     Scene m_scene;
 };

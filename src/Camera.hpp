@@ -10,7 +10,6 @@
 class Camera
 {
 public:
-
     Camera(int width, int height, float fovY, float sensitivity,
            glm::vec3 pos, glm::vec3 lookAt, glm::vec3 up)
     :   m_width(width),

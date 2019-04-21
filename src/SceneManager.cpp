@@ -1,16 +1,8 @@
 #include "SceneManager.hpp"
-#include "OpenGLRaytracer.h"
 #include "ShaderManager.hpp"
 
 #include <objSpirit.hpp>
 
-SceneManager::SceneManager(const std::shared_ptr<OpenGLRaytracer> &raytracer,
-                           const std::shared_ptr<ShaderManager> &shManager) :
-    m_raytracer(raytracer),
-    m_shManager(shManager)
-{
-    initialize(raytracer);
-}
 
 void SceneManager::readScene(const std::string &filepath)
 {
@@ -98,7 +90,7 @@ void SceneManager::readScene(const std::string &filepath)
     }
 }
 
-void SceneManager::initialize(const std::shared_ptr<OpenGLRaytracer> &raytracer)
+void SceneManager::initialize(GLuint computeShaderID)
 {
     const GLchar* oNames[] = {"objects[0].p.A", "objects[0].p.B", "objects[0].p.C", "objects[0].type", "objects[0].material_index"};
     const GLchar* mNames[] = {"materials[0].diffuse", "materials[0].specularity", "materials[0].emission", "materials[0].shininess"};
@@ -114,12 +106,9 @@ void SceneManager::initialize(const std::shared_ptr<OpenGLRaytracer> &raytracer)
     const GLenum props[] = {GL_BUFFER_DATA_SIZE};
     const GLenum props2[] = {GL_OFFSET};
 
-    auto compShaderName = m_raytracer->getCompShaderProgName();
-    auto compShaderID = m_shManager->getShaderProgramID(compShaderName);
-
     auto getIndices = [&](int length, const GLchar** const names, GLint* indices){
         for (int i = 0; i < length; ++i) {
-            indices[i] = glGetProgramResourceIndex(compShaderID, GL_BUFFER_VARIABLE, names[i]);
+            indices[i] = glGetProgramResourceIndex(computeShaderID, GL_BUFFER_VARIABLE, names[i]);
         }
     };
 
@@ -127,55 +116,54 @@ void SceneManager::initialize(const std::shared_ptr<OpenGLRaytracer> &raytracer)
     getIndices(NumAttributesMaterial, mNames, mIndices);
     getIndices(NumAttributesLights, lNames, lIndices);
 
-    m_oBlockIndex = glGetProgramResourceIndex(compShaderID, GL_SHADER_STORAGE_BLOCK, "PrimitiveBuffer");
-    m_mBlockIndex = glGetProgramResourceIndex(compShaderID, GL_SHADER_STORAGE_BLOCK, "MaterialBuffer");
-    m_lBlockIndex = glGetProgramResourceIndex(compShaderID, GL_SHADER_STORAGE_BLOCK, "LightBuffer");
+    m_oBlockIndex = glGetProgramResourceIndex(computeShaderID, GL_SHADER_STORAGE_BLOCK, "PrimitiveBuffer");
+    m_mBlockIndex = glGetProgramResourceIndex(computeShaderID, GL_SHADER_STORAGE_BLOCK, "MaterialBuffer");
+    m_lBlockIndex = glGetProgramResourceIndex(computeShaderID, GL_SHADER_STORAGE_BLOCK, "LightBuffer");
 
     for (unsigned int i = 0; i < NumAttributesMaterial; ++i) {
-        glGetProgramResourceiv(compShaderID, GL_BUFFER_VARIABLE, mIndices[i], 1, props2, 1, NULL, &m_mOffsets[i]);
+        glGetProgramResourceiv(computeShaderID, GL_BUFFER_VARIABLE, mIndices[i], 1, props2, 1, NULL, &m_mOffsets[i]);
     }
 
     for (unsigned int i = 0; i < NumAttributesObjects; ++i) {
-        glGetProgramResourceiv(compShaderID, GL_BUFFER_VARIABLE, oIndices[i], 1, props2, 1, NULL, &m_oOffsets[i]);
+        glGetProgramResourceiv(computeShaderID, GL_BUFFER_VARIABLE, oIndices[i], 1, props2, 1, NULL, &m_oOffsets[i]);
     }
 
     for (unsigned int i = 0; i < NumAttributesLights; ++i) {
-        glGetProgramResourceiv(compShaderID, GL_BUFFER_VARIABLE, lIndices[i], 1, props2, 1, NULL, &m_lOffsets[i]);
+        glGetProgramResourceiv(computeShaderID, GL_BUFFER_VARIABLE, lIndices[i], 1, props2, 1, NULL, &m_lOffsets[i]);
     }
 
     int oBlockSize = 0;
     int mBlockSize = 0;
     int lBlockSize = 0;
-    glGetProgramResourceiv(compShaderID, GL_SHADER_STORAGE_BLOCK, m_oBlockIndex, 1, props, 1, NULL, &oBlockSize);
-    glGetProgramResourceiv(compShaderID, GL_SHADER_STORAGE_BLOCK, m_mBlockIndex, 1, props, 1, NULL, &mBlockSize);
-    glGetProgramResourceiv(compShaderID, GL_SHADER_STORAGE_BLOCK, m_lBlockIndex, 1, props, 1, NULL, &lBlockSize);
+    glGetProgramResourceiv(computeShaderID, GL_SHADER_STORAGE_BLOCK, m_oBlockIndex, 1, props, 1, NULL, &oBlockSize);
+    glGetProgramResourceiv(computeShaderID, GL_SHADER_STORAGE_BLOCK, m_mBlockIndex, 1, props, 1, NULL, &mBlockSize);
+    glGetProgramResourceiv(computeShaderID, GL_SHADER_STORAGE_BLOCK, m_lBlockIndex, 1, props, 1, NULL, &lBlockSize);
 
     m_oAlignOffset = (oBlockSize%16 == 0 ? oBlockSize : oBlockSize-(oBlockSize%16)+16);
     m_mAlignOffset = (mBlockSize%16 == 0 ? mBlockSize : mBlockSize-(mBlockSize%16)+16);
     m_lAlignOffset = (lBlockSize%16 == 0 ? lBlockSize : lBlockSize-(lBlockSize%16)+16);
-
-    //Keep in mind to change the array size in the OpenGLRaytracer class when you change the amount of generated buffers
-    glGenBuffers(3, m_raytracer->getStorageBufferIDs());
 }
 
-void SceneManager::uploadScenes(const std::vector<std::string> &filepaths)
+void SceneManager::uploadScenes(const std::vector<std::string> &filepaths, ShaderManager& shManager, GLuint computeShaderID, GLuint* computeShaderstorageBufferIDs)
 {
+    initialize(computeShaderID);
+
     for (const auto &filepath : filepaths) {
         std::cout << "Start reading scene: " << filepath << '\n';
         readScene(filepath);
         std::cout << "Completed reading scene: " << filepath << '\n';
         std::cout << "Start uploading scene: " << filepath << '\n';
-        uploadScene();
+        uploadScene(shManager, computeShaderID, computeShaderstorageBufferIDs);
         std::cout << "Completed uploading scene: " << filepath << "\n\n";
     }
 }
 
-void SceneManager::uploadScene()
+void SceneManager::uploadScene(ShaderManager& shManager, GLuint computeShaderID, GLuint* computeShaderstorageBufferIDs)
 {
     ////////////////////////////////////////////////////// LOADING OBJECTS //////////////////////////////////////////////////////
     void* p = malloc(m_numObjInShader * m_oAlignOffset);
 
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_raytracer->getStorageBufferIDs()[0]);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, computeShaderstorageBufferIDs[0]);
     glGetBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, m_numObjInShader * m_oAlignOffset, (void *)(p));
 
     if (m_numObjInShader * m_oAlignOffset == 0) {
@@ -223,14 +211,14 @@ void SceneManager::uploadScene()
         }
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-        glShaderStorageBlockBinding(m_shManager->getShaderProgramID(m_raytracer->getCompShaderProgName()), m_oBlockIndex, 0);
+        glShaderStorageBlockBinding(computeShaderID, m_oBlockIndex, 0);
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
     }
 
     ////////////////////////////////////////////////////// LOADING MATERIALS //////////////////////////////////////////////////////
     p = malloc(m_numMaterialsInShader * m_mAlignOffset);
 
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, m_raytracer->getStorageBufferIDs()[1]);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, computeShaderstorageBufferIDs[1]);
     glGetBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, m_numMaterialsInShader * m_mAlignOffset, p);
     if (m_numMaterialsInShader * m_mAlignOffset == 0) {
         glBufferData(GL_SHADER_STORAGE_BUFFER, (m_numMaterialsInShader + m_scene.materials.size()) * m_mAlignOffset, NULL, GL_STATIC_DRAW);
@@ -251,14 +239,14 @@ void SceneManager::uploadScene()
         }
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-        glShaderStorageBlockBinding(m_shManager->getShaderProgramID(m_raytracer->getCompShaderProgName()), m_mBlockIndex, 1);
+        glShaderStorageBlockBinding(computeShaderID, m_mBlockIndex, 1);
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
     }
 
     ////////////////////////////////////////////////////// LOADING LIGHTS //////////////////////////////////////////////////////
     p = malloc(m_numLightsInShader * m_lAlignOffset);
 
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, m_raytracer->getStorageBufferIDs()[2]);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, computeShaderstorageBufferIDs[2]);
     glGetBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, m_numLightsInShader * m_lAlignOffset, p);
     if (m_numLightsInShader * m_lAlignOffset == 0) {
         glBufferData(GL_SHADER_STORAGE_BUFFER, m_scene.numLights() * m_lAlignOffset, NULL, GL_STATIC_DRAW);
@@ -285,10 +273,10 @@ void SceneManager::uploadScene()
         }
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-        glShaderStorageBlockBinding(m_shManager->getShaderProgramID(m_raytracer->getCompShaderProgName()), m_lBlockIndex, 2);
+        glShaderStorageBlockBinding(computeShaderID, m_lBlockIndex, 2);
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
     }
 
-    m_shManager->loadUniform_(m_raytracer->getCompShaderProgName(), std::string("numObj"), m_numObjInShader);
-    m_shManager->loadUniform_(m_raytracer->getCompShaderProgName(), std::string("numLights"), m_numLightsInShader);
+    shManager.loadUniform_(computeShaderID, std::string("numObj"), m_numObjInShader);
+    shManager.loadUniform_(computeShaderID, std::string("numLights"), m_numLightsInShader);
 }

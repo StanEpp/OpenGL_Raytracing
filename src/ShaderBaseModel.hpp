@@ -2,7 +2,6 @@
 
 #include <unordered_map>
 #include <string>
-#include <memory>
 
 #include <GL/gl3w.h>
 

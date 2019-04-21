@@ -9,31 +9,29 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 set(SOURCE_FILES
     src/main.cpp
-    src/OpenGLRaytracer.cpp
     src/gl3w.c
     src/ShaderManager.cpp
     src/Texture.cpp
-    src/TextureRenderer.cpp
+    src/Screenquad.cpp
     src/SceneManager.cpp
+    src/Raytracer.cpp
 )
 
 set(HEADER_FILES
-    src/Camera.h
-    src/GLFWWindow.h
+    src/Camera.hpp
+    src/GLFWWindow.hpp
     src/GLFWInput.hpp
-    src/OpenGLRaytracer.h
-    src/Scene.h
+    src/Scene.hpp
     src/SceneManager.hpp
     src/ShaderBaseModel.hpp
     src/ShaderManager.hpp
-    src/Texture.h
-    src/TextureRenderer.h
-    src/ConfigLoader.h
+    src/Texture.hpp
+    src/Screenquad.hpp
+    src/ConfigLoader.hpp
+    src/Raytracer.hpp
 )
 
 set(SHADER_FILES
-    shader/vs.glsl
-    shader/fs.glsl
     shader/cs.glsl
 )
 

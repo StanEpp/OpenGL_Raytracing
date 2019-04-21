@@ -5,17 +5,11 @@
 
 #include <GLFW/glfw3.h>
 
-#include "GLFWWindow.h"
+#include "GLFWWindow.hpp"
 
 class GLFWInput
 {
 public:
-    GLFWInput() :
-        m_xPos(0), m_yPos(0),
-        m_xDiff(0), m_yDiff(0),
-        m_mouseButtonPressed{ false, false, false }, m_window(nullptr)
-    {}
-
     void bindInputToWindow(const GLFWWindow& window)
     {
         m_window = window.getGLFWwindow();
@@ -79,11 +73,11 @@ public:
     }
 
 private:
-    double m_xPos;
-    double m_yPos;
-    double m_xDiff;
-    double m_yDiff;
-    std::array<bool, 3> m_mouseButtonPressed;
+    double m_xPos = 0;
+    double m_yPos = 0;
+    double m_xDiff = 0;
+    double m_yDiff = 0;
+    std::array<bool, 3> m_mouseButtonPressed{ false, false, false };
     std::unordered_set<unsigned int> m_keyPressed;
-    GLFWwindow* m_window;
+    GLFWwindow* m_window = nullptr;
 };
