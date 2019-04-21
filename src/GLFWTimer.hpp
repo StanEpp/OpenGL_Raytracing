@@ -5,45 +5,23 @@
 class GLFWTimer
 {
 private:
-    double m_time{0};
-    double m_oldTime{0};
+    double m_timestamp = 0.;
 
 public:
-    //Receives time since glfwInit() call
-    double getTime() const
-    {
-        return m_time + glfwGetTime();
-    }
-
-    //Returns the time difference since the last getTimeDiff() call
-    double getTimeDiff()
-    {
-        double currTime = getTime();
-        double timeDiff = currTime - m_oldTime;
-        m_oldTime = currTime;
-
-        return timeDiff;
-    }
-
-    //Returns the time difference since the last getTimeDiff() call
-    double getTimeDiffWithoutActualization() const
-    {
-        double currTime = getTime();
-        double timeDiff = currTime - m_oldTime;
-
-        return timeDiff;
-    }
-
-    //Returns the time since the last resetTime() call
-    double getRefreshedTime() const
+    // Receives time since glfwInit() call
+    double timestamp() const
     {
         return glfwGetTime();
     }
 
-    //Resets the time to 0
-    void resetTime()
+    void setTimestamp()
     {
-        m_time += glfwGetTime();
-        glfwSetTime(0.0);
+        m_timestamp = timestamp();
+    }
+
+    // Returns the time difference since the last setTimestamp() call.
+    double timestampDiff() const
+    {
+        return glfwGetTime() - m_timestamp;
     }
 };

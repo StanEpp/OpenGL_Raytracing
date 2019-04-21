@@ -43,8 +43,8 @@ public:
 
     bool isKeyPressedOnce(unsigned int GLFW_Key)
     {
-        if (isKeyPressed(GLFW_Key)){
-            if (m_keyPressed.find(GLFW_Key) == m_keyPressed.end()){
+        if (isKeyPressed(GLFW_Key)) {
+            if (m_keyPressed.find(GLFW_Key) == m_keyPressed.end()) {
                 m_keyPressed.insert(GLFW_Key);
                 return true;
             }
@@ -56,8 +56,8 @@ public:
 
     bool isMouseButtonPressedOnce(unsigned int GLFW_MouseButton)
     {
-        if (isMouseButtonPressed(GLFW_MouseButton)){
-            if (!m_mouseButtonPressed[GLFW_MouseButton]){
+        if (isMouseButtonPressed(GLFW_MouseButton)) {
+            if (!m_mouseButtonPressed[GLFW_MouseButton]) {
                 m_mouseButtonPressed[GLFW_MouseButton] = true;
                 return true;
             }

@@ -10,7 +10,10 @@ class GLFWWindow
 {
 public:
     GLFWWindow(int width, int height, const std::string& windowName, bool fullscreen) :
-        m_width(width), m_height(height), m_windowName(windowName), m_fullscreen(fullscreen)
+        m_width(width),
+        m_height(height),
+        m_windowName(windowName),
+        m_fullscreen(fullscreen)
     {
         initialize();
         setVSync(false);
@@ -53,7 +56,7 @@ private:
 
     void initialize()
     {
-        if(glfwInit() != GL_TRUE){
+        if (glfwInit() != GL_TRUE) {
             throw std::runtime_error("Could not initialize GLFW!");
         }
 
@@ -62,7 +65,7 @@ private:
 
         m_window = glfwCreateWindow(m_width, m_height, m_windowName.c_str(), m_fullscreen ? glfwGetPrimaryMonitor() : NULL, NULL);
 
-        if(!m_window){
+        if (!m_window) {
             glfwTerminate();
             throw std::runtime_error("Could not open GLFW Window!");
         }
@@ -73,11 +76,11 @@ private:
 
         glfwMakeContextCurrent(m_window);
 
-        if (gl3wInit()){
+        if (gl3wInit()) {
             throw std::runtime_error("Could not initialize gl3w!");
         }
 
-        if (!gl3wIsSupported(4, 3)){
+        if (!gl3wIsSupported(4, 3)) {
             throw std::runtime_error("OpenGL 4.3 not supported!");
         }
 
@@ -85,9 +88,9 @@ private:
         std::cout << "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << '\n';
     }
 
-    int	m_width;
-    int m_height;
+    int	m_width = 1280;
+    int m_height = 720;
     std::string	m_windowName;
-    bool m_fullscreen;
-    GLFWwindow*	m_window;
+    bool m_fullscreen = false;
+    GLFWwindow*	m_window = nullptr;
 };

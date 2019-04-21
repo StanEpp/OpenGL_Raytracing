@@ -7,7 +7,6 @@
 
 class ShaderBaseModel
 {
-
     friend class ShaderManager;
 
 private:
@@ -20,7 +19,7 @@ public:
     {
         auto it = m_shader.find(shaderKey);
 
-        if(it == m_shader.end()){
+        if (it == m_shader.end()) {
             return 0;
         } else {
             return it->second;
@@ -32,7 +31,7 @@ public:
     {
         auto it = m_shaderProgram.find(shaderProgramKey);
 
-        if(it == m_shaderProgram.end()){
+        if (it == m_shaderProgram.end()) {
             return 0;
         } else {
             return it->second;

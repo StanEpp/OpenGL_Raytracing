@@ -8,7 +8,6 @@
 class SceneManager
 {
 public:
-
     void uploadScenes(const std::vector<std::string> &filepaths, ShaderManager& shManager, GLuint computeShaderID, GLuint* computerShaderstorageBufferIDs);
 
 private:

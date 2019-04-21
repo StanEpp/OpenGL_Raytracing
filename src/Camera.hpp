@@ -69,8 +69,8 @@ public:
     }
 
 private:
-    int	m_width = 1024;
-    int m_height = 768;
+    int	m_width = 1280;
+    int m_height = 720;
     float m_fovY = 0.f;
     float m_fovX = 0.f;
     float m_accRotX = 0.f;

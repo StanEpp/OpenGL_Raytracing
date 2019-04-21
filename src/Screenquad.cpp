@@ -64,7 +64,6 @@ Screenquad::Screenquad(ShaderManager& shManager)
     shManager.attachShader("fragmentShader", shaderProgName);
 
     shManager.linkProgram(shaderProgName);
-    shManager.useProgram(shaderProgName);
 
     shManager.deleteShader("vertexShader");
     shManager.deleteShader("fragmentShader");
@@ -75,7 +74,7 @@ Screenquad::Screenquad(ShaderManager& shManager)
 void Screenquad::draw(Texture& textureToRender)
 {
     glUseProgram(m_shaderProgramID);
-    // glActiveTexture(GL_TEXTURE0 + textureToRender.bindPoint());
+    glActiveTexture(GL_TEXTURE0 + textureToRender.bindPoint());
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexUVBufferID);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
@@ -86,6 +85,6 @@ void Screenquad::draw(Texture& textureToRender)
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-    glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(0);
 }
