@@ -25,7 +25,7 @@ You can also load several scenes simultaneously:
 ```
 
 ## Scene format
-The application uses the [wavefront obj format](https://en.wikipedia.org/wiki/Wavefront_.obj_file) for scene descrpition. The library [objSpirit](https://github.com/stanepp/objspirit) loads the files. It extends the obj format by a few primitves and light source descriptors. Two example scenes are provided in the `scenes` folder.
+The application uses the [wavefront obj format](https://en.wikipedia.org/wiki/Wavefront_.obj_file) for scene description. The library [objSpirit](https://github.com/stanepp/objspirit) loads the files. It extends the obj format by a few primitives and light source descriptors. Two example scenes are provided in the `scenes` folder.
 
 ## Keys
 Mouse = Rotating the camera\
